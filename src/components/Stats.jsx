@@ -4,110 +4,102 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const stats = [
-  { value: 30, suffix: '+', label: 'Years Experience', sublabel: 'Elite coaching since 1994' },
-  { value: 1, suffix: '', label: 'Kona Ironman Champion', sublabel: 'The pinnacle of the sport' },
-  { value: 500, suffix: '+', label: 'Athletes Coached', sublabel: 'From first-timers to Kona qualifiers' },
-  { value: 3, suffix: '', label: 'Disciplines. 1 Coach.', sublabel: 'Swim, bike, run — all mastered' },
+const STATS = [
+  { value: 30, suffix: '+', label: 'Years Experience', sub: 'Elite coaching since 1994' },
+  { value: 1, suffix: '', label: 'Kona Champion', sub: 'The pinnacle of the sport' },
+  { value: 500, suffix: '+', label: 'Athletes Coached', sub: 'From first-timers to qualifiers' },
+  { value: 3, suffix: '', label: 'Disciplines. 1 Coach.', sub: 'Swim, bike, run — all mastered' },
 ]
 
-function StatCard({ value, suffix, label, sublabel, index }) {
+function StatCard({ value, suffix, label, sub, index }) {
   const cardRef = useRef(null)
   const numRef = useRef(null)
   const animated = useRef(false)
 
   useEffect(() => {
-    if (!cardRef.current) return
+    const card = cardRef.current
+    if (!card) return
     const obj = { val: 0 }
-    gsap.from(cardRef.current, {
-      scrollTrigger: {
-        trigger: cardRef.current,
-        start: 'top 80%',
-        once: true,
-      },
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      delay: index * 0.1,
-      ease: 'power2.out',
-      onComplete: () => {
-        if (animated.current) return
-        animated.current = true
-        gsap.to(obj, {
-          val: value,
-          duration: 1.6,
-          ease: 'power2.out',
-          onUpdate: () => {
-            if (numRef.current) {
-              numRef.current.textContent = Math.round(obj.val) + suffix
-            }
-          },
-        })
-      },
-    })
+
+    gsap.fromTo(card,
+      { y: 32, opacity: 0 },
+      {
+        y: 0, opacity: 1,
+        duration: 0.65, delay: index * 0.12, ease: 'power2.out',
+        scrollTrigger: { trigger: card, start: 'top 82%', once: true },
+        onComplete: () => {
+          if (animated.current) return
+          animated.current = true
+          gsap.to(obj, {
+            val: value, duration: 1.8, ease: 'power2.out',
+            onUpdate: () => {
+              const el = numRef.current
+              if (el) el.textContent = Math.round(obj.val) + suffix
+            },
+          })
+        },
+      }
+    )
   }, [value, suffix, index])
 
   return (
-    <div
-      ref={cardRef}
-      className="flex flex-col items-center text-center group"
-    >
-      <div className="relative mb-3">
-        <div
-          ref={numRef}
-          className="font-display text-[#0D2B3E] leading-none"
-          style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
-            fontSize: 'clamp(3rem, 5vw, 4.5rem)',
-          }}
-        >
-          0{suffix}
-        </div>
-        {/* Accent underline */}
-        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-8 h-0.5 bg-[#F5A623] group-hover:w-12 transition-all duration-300" />
+    <div ref={cardRef} style={{
+      display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
+    }}>
+      <div style={{ position: 'relative', marginBottom: 16 }}>
+        <div ref={numRef} style={{
+          fontFamily: "'DM Serif Display', Georgia, serif",
+          fontSize: 'clamp(2.8rem, 5vw, 4.5rem)',
+          color: '#0D2B3E', lineHeight: 1,
+        }}>0{suffix}</div>
+        <div style={{
+          position: 'absolute', bottom: -8, left: '50%', transform: 'translateX(-50%)',
+          width: 32, height: 2, background: '#F5A623', borderRadius: 2,
+        }} />
       </div>
-      <p
-        className="font-semibold text-[#0D2B3E] mb-1"
-        style={{ fontSize: 'clamp(0.9rem, 1.5vw, 1.05rem)' }}
-      >
-        {label}
-      </p>
-      <p className="text-[#0D2B3E]/50 text-sm leading-snug">{sublabel}</p>
+      <p style={{ fontSize: 15, fontWeight: 600, color: '#0D2B3E', marginTop: 8, marginBottom: 5 }}>{label}</p>
+      <p style={{ fontSize: 13, color: 'rgba(13,43,62,0.5)', lineHeight: 1.4 }}>{sub}</p>
     </div>
   )
 }
 
 export default function Stats() {
   const sectionRef = useRef(null)
+  const eyebrowRef = useRef(null)
 
   useEffect(() => {
-    if (!sectionRef.current) return
-    const eyebrow = sectionRef.current.querySelector('.section-eyebrow')
-    if (!eyebrow) return
-    gsap.from(eyebrow, {
-      scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-      y: 20,
-      opacity: 0,
-      duration: 0.5,
-      ease: 'power2.out',
-    })
+    const section = sectionRef.current
+    const eyebrow = eyebrowRef.current
+    if (!section || !eyebrow) return
+    gsap.fromTo(eyebrow,
+      { y: 20, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 82%', once: true } }
+    )
   }, [])
 
   return (
-    <section ref={sectionRef} className="bg-[#FAFAF8] py-20 lg:py-28 border-b border-gray-100">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        {/* Section label */}
-        <div className="section-eyebrow flex items-center justify-center gap-3 mb-16">
-          <div className="h-px flex-1 max-w-16 bg-[#7EC8E3]" />
-          <span className="text-[#1A6B8A] text-xs font-semibold tracking-[0.2em] uppercase">
-            By the Numbers
-          </span>
-          <div className="h-px flex-1 max-w-16 bg-[#7EC8E3]" />
+    <section ref={sectionRef} style={{
+      background: '#FAFAF8',
+      padding: '80px 0 100px',
+      borderBottom: '1px solid rgba(0,0,0,0.06)',
+    }}>
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+        <div ref={eyebrowRef} style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: 12, marginBottom: 64,
+        }}>
+          <div style={{ height: 1, width: 48, background: '#7EC8E3' }} />
+          <span style={{
+            fontSize: 11, fontWeight: 600, color: '#1A6B8A',
+            letterSpacing: '0.2em', textTransform: 'uppercase',
+          }}>By the Numbers</span>
+          <div style={{ height: 1, width: 48, background: '#7EC8E3' }} />
         </div>
 
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 lg:gap-8">
-          {stats.map((stat, i) => (
-            <StatCard key={stat.label} {...stat} index={i} />
+        <div className="stats-grid" style={{ display: 'grid', gap: '48px 32px' }}>
+          {STATS.map((s, i) => (
+            <StatCard key={s.label} {...s} index={i} />
           ))}
         </div>
       </div>

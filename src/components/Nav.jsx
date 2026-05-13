@@ -1,108 +1,149 @@
 import { useEffect, useRef, useState } from 'react'
 import { gsap } from 'gsap'
 
+const NAVY = '#0D2B3E'
+const BLUE = '#1A6B8A'
+const SKY = '#7EC8E3'
+const RED = '#D4201A'
+
 export default function Nav() {
-  const navRef = useRef(null)
+  const ref = useRef(null)
   const [scrolled, setScrolled] = useState(false)
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    if (navRef.current) {
-      gsap.from(navRef.current, {
-        y: -20,
-        opacity: 0,
-        duration: 0.6,
-        ease: 'power2.out',
-        delay: 0.3,
-      })
-    }
-
-    const onScroll = () => setScrolled(window.scrollY > 40)
+    const el = ref.current
+    if (!el) return
+    gsap.fromTo(el,
+      { y: -70, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.75, ease: 'power3.out', delay: 0.2 }
+    )
+    const onScroll = () => setScrolled(window.scrollY > 50)
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
   }, [])
 
-  const links = ['Programs', 'About', 'Testimonials']
+  const links = [
+    { label: 'Programs', href: '#programs' },
+    { label: 'About', href: '#about' },
+    { label: 'Testimonials', href: '#testimonials' },
+  ]
 
   return (
     <nav
-      ref={navRef}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled
-          ? 'bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100'
-          : 'bg-transparent'
-      }`}
+      ref={ref}
+      style={{
+        position: 'fixed',
+        top: 0, left: 0, right: 0,
+        zIndex: 9999,
+        transition: 'background 0.35s ease, box-shadow 0.35s ease',
+        background: scrolled ? 'rgba(255, 255, 255, 0.97)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        WebkitBackdropFilter: scrolled ? 'blur(20px)' : 'none',
+        boxShadow: scrolled ? '0 1px 0 rgba(0,0,0,0.08)' : 'none',
+      }}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 lg:h-20">
+      <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
+        <div style={{
+          display: 'flex', alignItems: 'center',
+          justifyContent: 'space-between', height: 72,
+        }}>
           {/* Logo */}
-          <a href="#" className="flex items-center gap-2 group">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#7EC8E3] to-[#1A6B8A] flex items-center justify-center flex-shrink-0">
-              <span className="text-white font-bold text-xs leading-none">T2</span>
+          <a href="#" style={{ display: 'flex', alignItems: 'center', gap: 10, textDecoration: 'none' }}>
+            <div style={{
+              width: 36, height: 36, borderRadius: '50%', flexShrink: 0,
+              background: `linear-gradient(135deg, ${SKY}, ${BLUE})`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+            }}>
+              <span style={{ color: '#fff', fontWeight: 700, fontSize: 12, letterSpacing: '0.04em' }}>T2</span>
             </div>
-            <span
-              className="font-display text-xl text-[#0D2B3E] group-hover:text-[#1A6B8A] transition-colors"
-              style={{ fontFamily: "'DM Serif Display', Georgia, serif" }}
-            >
-              T2 Coaching
-            </span>
+            <span style={{
+              fontFamily: "'DM Serif Display', Georgia, serif",
+              fontSize: 20, lineHeight: 1,
+              color: scrolled ? NAVY : '#ffffff',
+              transition: 'color 0.35s ease',
+            }}>T2 Coaching</span>
           </a>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex items-center gap-8">
-            {links.map((link) => (
-              <a
-                key={link}
-                href={`#${link.toLowerCase()}`}
-                className="text-sm font-medium text-[#0D2B3E]/70 hover:text-[#0D2B3E] transition-colors tracking-wide"
-              >
-                {link}
-              </a>
+          {/* Desktop links */}
+          <div className="hidden md:flex" style={{ alignItems: 'center', gap: 36 }}>
+            {links.map(({ label, href }) => (
+              <a key={label} href={href} style={{
+                fontSize: 14, fontWeight: 500, letterSpacing: '0.025em',
+                color: scrolled ? 'rgba(13,43,62,0.68)' : 'rgba(255,255,255,0.85)',
+                textDecoration: 'none',
+                transition: 'color 0.2s ease',
+              }}>{label}</a>
             ))}
             <a
               href="https://t2coaching.com/calendar/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-[#D4201A] hover:bg-[#b81b15] text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-all duration-200 hover:shadow-lg hover:shadow-red-200 hover:-translate-y-0.5"
-            >
-              Book a Call
-            </a>
+              target="_blank" rel="noopener noreferrer"
+              style={{
+                display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                whiteSpace: 'nowrap',
+                background: RED, color: '#fff',
+                fontSize: 14, fontWeight: 600,
+                padding: '10px 22px', borderRadius: 100,
+                textDecoration: 'none', letterSpacing: '0.01em',
+              }}
+            >Book a Call</a>
           </div>
 
           {/* Mobile hamburger */}
           <button
-            className="md:hidden flex flex-col gap-1.5 p-2"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={() => setOpen(v => !v)}
+            className="flex md:hidden"
             aria-label="Toggle menu"
+            style={{
+              background: 'none', border: 'none', cursor: 'pointer',
+              padding: 8, flexDirection: 'column', gap: 5, alignItems: 'center',
+            }}
           >
-            <span className={`block w-6 h-0.5 bg-[#0D2B3E] transition-all duration-200 ${menuOpen ? 'rotate-45 translate-y-2' : ''}`} />
-            <span className={`block w-6 h-0.5 bg-[#0D2B3E] transition-all duration-200 ${menuOpen ? 'opacity-0' : ''}`} />
-            <span className={`block w-6 h-0.5 bg-[#0D2B3E] transition-all duration-200 ${menuOpen ? '-rotate-45 -translate-y-2' : ''}`} />
+            {[0, 1, 2].map(i => (
+              <span key={i} style={{
+                display: 'block', width: 24, height: 2, borderRadius: 2,
+                background: scrolled ? NAVY : '#fff',
+                transition: 'all 0.25s ease',
+                transform: open && i === 0 ? 'rotate(45deg) translateY(7px)' :
+                           open && i === 2 ? 'rotate(-45deg) translateY(-7px)' : 'none',
+                opacity: open && i === 1 ? 0 : 1,
+              }} />
+            ))}
           </button>
         </div>
       </div>
 
       {/* Mobile menu */}
-      <div className={`md:hidden transition-all duration-300 overflow-hidden ${menuOpen ? 'max-h-64' : 'max-h-0'}`}>
-        <div className="bg-white/98 backdrop-blur-md border-t border-gray-100 px-6 py-4 flex flex-col gap-4">
-          {links.map((link) => (
-            <a
-              key={link}
-              href={`#${link.toLowerCase()}`}
-              className="text-sm font-medium text-[#0D2B3E]/70 hover:text-[#0D2B3E] py-1"
-              onClick={() => setMenuOpen(false)}
-            >
-              {link}
-            </a>
+      <div style={{
+        overflow: 'hidden',
+        maxHeight: open ? 300 : 0,
+        transition: 'max-height 0.3s ease',
+        background: 'rgba(255,255,255,0.98)',
+        backdropFilter: 'blur(20px)',
+        WebkitBackdropFilter: 'blur(20px)',
+        borderTop: open ? '1px solid rgba(0,0,0,0.07)' : 'none',
+      }}>
+        <div style={{ padding: '16px 32px 28px' }}>
+          {links.map(({ label, href }) => (
+            <a key={label} href={href} onClick={() => setOpen(false)} style={{
+              display: 'block', padding: '13px 0',
+              fontSize: 15, fontWeight: 500, color: NAVY,
+              textDecoration: 'none',
+              borderBottom: '1px solid rgba(0,0,0,0.06)',
+            }}>{label}</a>
           ))}
           <a
             href="https://t2coaching.com/calendar/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center justify-center bg-[#D4201A] text-white text-sm font-semibold px-5 py-3 rounded-full"
-          >
-            Book a Call
-          </a>
+            target="_blank" rel="noopener noreferrer"
+            style={{
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              marginTop: 16,
+              background: RED, color: '#fff',
+              fontSize: 14, fontWeight: 600,
+              padding: '14px 0',
+              borderRadius: 100, textDecoration: 'none',
+            }}
+          >Book a Call</a>
         </div>
       </div>
     </nav>
