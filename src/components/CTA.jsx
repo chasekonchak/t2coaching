@@ -9,6 +9,7 @@ export default function CTA() {
   const contentRef = useRef(null)
 
   useEffect(() => {
+    if (!sectionRef.current || !contentRef.current) return
     gsap.from(contentRef.current.children, {
       scrollTrigger: { trigger: sectionRef.current, start: 'top 75%', once: true },
       y: 40,

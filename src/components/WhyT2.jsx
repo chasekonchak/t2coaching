@@ -64,15 +64,20 @@ export default function WhyT2() {
   const itemsRef = useRef([])
 
   useEffect(() => {
-    gsap.from(sectionRef.current.querySelector('.section-header'), {
-      scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    })
+    if (!sectionRef.current) return
+    const header = sectionRef.current.querySelector('.section-header')
+    if (header) {
+      gsap.from(header, {
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      })
+    }
 
     itemsRef.current.forEach((item, i) => {
+      if (!item) return
       gsap.from(item, {
         scrollTrigger: { trigger: item, start: 'top 85%', once: true },
         y: 30,

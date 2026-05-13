@@ -7,13 +7,15 @@ export default function Nav() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    gsap.from(navRef.current, {
-      y: -20,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-      delay: 0.3,
-    })
+    if (navRef.current) {
+      gsap.from(navRef.current, {
+        y: -20,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+        delay: 0.3,
+      })
+    }
 
     const onScroll = () => setScrolled(window.scrollY > 40)
     window.addEventListener('scroll', onScroll, { passive: true })

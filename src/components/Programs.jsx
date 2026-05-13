@@ -57,15 +57,20 @@ export default function Programs() {
   const cardsRef = useRef([])
 
   useEffect(() => {
-    gsap.from(sectionRef.current.querySelector('.section-header'), {
-      scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    })
+    if (!sectionRef.current) return
+    const header = sectionRef.current.querySelector('.section-header')
+    if (header) {
+      gsap.from(header, {
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      })
+    }
 
     cardsRef.current.forEach((card, i) => {
+      if (!card) return
       gsap.from(card, {
         scrollTrigger: { trigger: card, start: 'top 85%', once: true },
         y: 40,

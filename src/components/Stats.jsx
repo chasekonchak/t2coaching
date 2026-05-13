@@ -17,6 +17,8 @@ function StatCard({ value, suffix, label, sublabel, index }) {
   const animated = useRef(false)
 
   useEffect(() => {
+    if (!cardRef.current) return
+    const obj = { val: 0 }
     gsap.from(cardRef.current, {
       scrollTrigger: {
         trigger: cardRef.current,
@@ -29,23 +31,18 @@ function StatCard({ value, suffix, label, sublabel, index }) {
       delay: index * 0.1,
       ease: 'power2.out',
       onComplete: () => {
-        if (!animated.current) {
-          animated.current = true
-          gsap.to(
-            { val: 0 },
-            {
-              val: value,
-              duration: 1.6,
-              ease: 'power2.out',
-              onUpdate: function () {
-                if (numRef.current) {
-                  numRef.current.textContent =
-                    Math.round(this.targets()[0].val) + suffix
-                }
-              },
+        if (animated.current) return
+        animated.current = true
+        gsap.to(obj, {
+          val: value,
+          duration: 1.6,
+          ease: 'power2.out',
+          onUpdate: () => {
+            if (numRef.current) {
+              numRef.current.textContent = Math.round(obj.val) + suffix
             }
-          )
-        }
+          },
+        })
       },
     })
   }, [value, suffix, index])
@@ -84,7 +81,10 @@ export default function Stats() {
   const sectionRef = useRef(null)
 
   useEffect(() => {
-    gsap.from(sectionRef.current.querySelector('.section-eyebrow'), {
+    if (!sectionRef.current) return
+    const eyebrow = sectionRef.current.querySelector('.section-eyebrow')
+    if (!eyebrow) return
+    gsap.from(eyebrow, {
       scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
       y: 20,
       opacity: 0,

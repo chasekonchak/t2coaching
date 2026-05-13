@@ -11,30 +11,38 @@ export default function About() {
   const quoteRef = useRef(null)
 
   useEffect(() => {
-    gsap.from(textRef.current, {
-      scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-      x: -60,
-      opacity: 0,
-      duration: 0.8,
-      ease: 'power2.out',
-    })
+    if (!sectionRef.current) return
 
-    gsap.from(imageRef.current, {
-      scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-      x: 60,
-      opacity: 0,
-      duration: 0.8,
-      delay: 0.15,
-      ease: 'power2.out',
-    })
+    if (textRef.current) {
+      gsap.from(textRef.current, {
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+        x: -60,
+        opacity: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+      })
+    }
 
-    gsap.from(quoteRef.current, {
-      scrollTrigger: { trigger: quoteRef.current, start: 'top 85%', once: true },
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    })
+    if (imageRef.current) {
+      gsap.from(imageRef.current, {
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+        x: 60,
+        opacity: 0,
+        duration: 0.8,
+        delay: 0.15,
+        ease: 'power2.out',
+      })
+    }
+
+    if (quoteRef.current) {
+      gsap.from(quoteRef.current, {
+        scrollTrigger: { trigger: quoteRef.current, start: 'top 85%', once: true },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      })
+    }
   }, [])
 
   return (

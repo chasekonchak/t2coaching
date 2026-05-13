@@ -60,21 +60,27 @@ export default function Testimonials() {
   const [active, setActive] = useState(0)
 
   useEffect(() => {
-    gsap.from(sectionRef.current.querySelector('.section-header'), {
-      scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
-      y: 30,
-      opacity: 0,
-      duration: 0.6,
-      ease: 'power2.out',
-    })
+    if (!sectionRef.current) return
+    const header = sectionRef.current.querySelector('.section-header')
+    if (header) {
+      gsap.from(header, {
+        scrollTrigger: { trigger: sectionRef.current, start: 'top 80%', once: true },
+        y: 30,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      })
+    }
 
-    gsap.from(trackRef.current, {
-      scrollTrigger: { trigger: trackRef.current, start: 'top 85%', once: true },
-      y: 40,
-      opacity: 0,
-      duration: 0.7,
-      ease: 'power2.out',
-    })
+    if (trackRef.current) {
+      gsap.from(trackRef.current, {
+        scrollTrigger: { trigger: trackRef.current, start: 'top 85%', once: true },
+        y: 40,
+        opacity: 0,
+        duration: 0.7,
+        ease: 'power2.out',
+      })
+    }
   }, [])
 
   const goTo = (index) => {

@@ -10,6 +10,15 @@ export default function Hero() {
   const scrollHintRef = useRef(null)
 
   useEffect(() => {
+    if (
+      !taglineRef.current ||
+      !headlineRef.current ||
+      !sublineRef.current ||
+      !ctaRef.current ||
+      !scrollHintRef.current
+    ) return
+
+    const lines = headlineRef.current.querySelectorAll('.headline-line')
     const tl = gsap.timeline({ delay: 0.4 })
 
     tl.from(taglineRef.current, {
@@ -18,34 +27,31 @@ export default function Hero() {
       duration: 0.6,
       ease: 'power2.out',
     })
-      .from(
-        headlineRef.current.querySelectorAll('.headline-line'),
-        {
-          y: 50,
-          opacity: 0,
-          duration: 0.7,
-          stagger: 0.12,
-          ease: 'power3.out',
-        },
-        '-=0.3'
-      )
-      .from(
-        sublineRef.current,
-        { y: 20, opacity: 0, duration: 0.6, ease: 'power2.out' },
-        '-=0.3'
-      )
-      .from(
-        ctaRef.current,
-        { y: 16, opacity: 0, duration: 0.5, ease: 'power2.out' },
-        '-=0.2'
-      )
-      .from(
-        scrollHintRef.current,
-        { opacity: 0, duration: 0.6, ease: 'power2.out' },
-        '-=0.1'
-      )
+      .from(lines, {
+        y: 50,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+      }, '-=0.3')
+      .from(sublineRef.current, {
+        y: 20,
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      }, '-=0.3')
+      .from(ctaRef.current, {
+        y: 16,
+        opacity: 0,
+        duration: 0.5,
+        ease: 'power2.out',
+      }, '-=0.2')
+      .from(scrollHintRef.current, {
+        opacity: 0,
+        duration: 0.6,
+        ease: 'power2.out',
+      }, '-=0.1')
 
-    // Subtle floating animation on scroll hint arrow
     gsap.to(scrollHintRef.current, {
       y: 8,
       repeat: -1,
