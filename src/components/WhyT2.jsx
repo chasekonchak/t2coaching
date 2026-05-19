@@ -30,8 +30,10 @@ const FEATURES = [
 function FeatureCard({ f, style }) {
   return (
     <div style={{
-      background: '#ffffff',
-      border: '1px solid rgba(0,0,0,0.07)',
+      background: 'rgba(8,18,32,0.7)',
+      backdropFilter: 'blur(16px)',
+      WebkitBackdropFilter: 'blur(16px)',
+      border: '1px solid rgba(255,255,255,0.1)',
       borderRadius: 20,
       padding: '36px 36px 32px',
       position: 'relative',
@@ -49,10 +51,10 @@ function FeatureCard({ f, style }) {
       <h3 style={{
         fontFamily: "'DM Serif Display', Georgia, serif",
         fontSize: 'clamp(1.15rem, 1.8vw, 1.35rem)',
-        color: '#0D2B3E', lineHeight: 1.3, marginBottom: 12,
+        color: '#ffffff', lineHeight: 1.3, marginBottom: 12,
       }}>{f.title}</h3>
 
-      <p style={{ fontSize: 15, color: 'rgba(13,43,62,0.6)', lineHeight: 1.7 }}>{f.body}</p>
+      <p style={{ fontSize: 15, color: 'rgba(255,255,255,0.65)', lineHeight: 1.7 }}>{f.body}</p>
 
       <div style={{
         position: 'absolute', bottom: 0, left: 0, right: 0,
@@ -140,19 +142,19 @@ export default function WhyT2() {
       <h2 style={{
         fontFamily: "'DM Serif Display', Georgia, serif",
         fontSize: 'clamp(2rem, 3.5vw, 2.8rem)',
-        color: '#0D2B3E', lineHeight: 1.2, marginBottom: 10,
+        color: '#ffffff', lineHeight: 1.2, marginBottom: 10,
       }}>
         What makes Wendy{' '}
         <em style={{ color: '#7EC8E3', fontStyle: 'italic' }}>different.</em>
       </h2>
-      <p style={{ fontSize: 16, color: 'rgba(13,43,62,0.5)', lineHeight: 1.6 }}>
+      <p style={{ fontSize: 16, color: 'rgba(255,255,255,0.55)', lineHeight: 1.6 }}>
         Not every coach has stood on the Kona finish line.
       </p>
     </div>
   )
 
   return (
-    <section ref={wrapRef} className="why-section" style={{ background: 'rgba(250,250,248,0.75)', position: 'relative' }}>
+    <section ref={wrapRef} className="why-section" style={{ background: 'transparent', position: 'relative' }}>
 
       {/* ── DESKTOP: fixed header + horizontal track ── */}
       <div className="why-desktop-track" style={{ height: '100%', flexDirection: 'column', position: 'relative' }}>

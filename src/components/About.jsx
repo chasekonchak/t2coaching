@@ -57,7 +57,7 @@ export default function About() {
   }, [])
 
   return (
-    <section id="about" ref={sectionRef} style={{ background: 'rgba(255,255,255,0.75)', padding: '80px 0 100px', overflow: 'hidden' }}>
+    <section id="about" ref={sectionRef} style={{ background: 'transparent', padding: '80px 0 100px', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
         <div className="about-grid" style={{ display: 'grid', gap: 60, alignItems: 'center' }}>
 
@@ -73,7 +73,7 @@ export default function About() {
             <h2 style={{
               fontFamily: "'DM Serif Display', Georgia, serif",
               fontSize: 'clamp(1.9rem, 3.5vw, 2.8rem)',
-              color: '#0D2B3E', lineHeight: 1.2, marginBottom: 28,
+              color: '#ffffff', lineHeight: 1.2, marginBottom: 28,
             }}>
               I've been in your shoes —<br />
               and on that{' '}
@@ -86,7 +86,7 @@ export default function About() {
                 "Her philosophy is simple: great coaching meets you where you are. Whether you're a weekend warrior juggling family and a full-time job, or an age grouper with a Kona slot in your sights, Wendy designs training that fits your life — not the other way around.",
                 'Based in Colorado, she coaches athletes remotely and in person across all three disciplines with USA Triathlon, USA Cycling, and USA Swimming certifications — making T2 Coaching one of the rare programs where a single elite coach guides every discipline.',
               ].map((text, i) => (
-                <p key={i} style={{ fontSize: 16, color: 'rgba(13,43,62,0.64)', lineHeight: 1.72 }}>{text}</p>
+                <p key={i} style={{ fontSize: 16, color: 'rgba(255,255,255,0.72)', lineHeight: 1.72 }}>{text}</p>
               ))}
             </div>
 
@@ -95,7 +95,7 @@ export default function About() {
                 <span key={c} ref={el => credsRef.current[i] = el} style={{
                   display: 'inline-block',
                   border: '1px solid rgba(126,200,227,0.55)',
-                  color: '#1A6B8A',
+                  color: '#7EC8E3',
                   fontSize: 12, fontWeight: 600,
                   padding: '6px 14px', borderRadius: 100, letterSpacing: '0.03em',
                 }}>{c}</span>

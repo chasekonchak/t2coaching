@@ -90,8 +90,10 @@ function ProgramCard({ program, index }) {
       style={{
         position: 'relative',
         display: 'flex', flexDirection: 'column',
-        background: 'rgba(250,250,248,0.88)',
-        border: '1px solid rgba(0,0,0,0.07)',
+        background: 'rgba(8,18,32,0.7)',
+        backdropFilter: 'blur(16px)',
+        WebkitBackdropFilter: 'blur(16px)',
+        border: '1px solid rgba(255,255,255,0.1)',
         borderRadius: 20,
         padding: '36px 32px 32px',
         willChange: 'transform',
@@ -118,18 +120,18 @@ function ProgramCard({ program, index }) {
 
       <h3 style={{
         fontFamily: "'DM Serif Display', Georgia, serif",
-        fontSize: 20, color: '#0D2B3E',
+        fontSize: 20, color: '#ffffff',
         lineHeight: 1.3, marginBottom: 12,
       }}>{p.title}</h3>
 
-      <p style={{ fontSize: 14, color: 'rgba(13,43,62,0.58)', lineHeight: 1.72, flex: 1, marginBottom: 24 }}>
+      <p style={{ fontSize: 14, color: 'rgba(255,255,255,0.65)', lineHeight: 1.72, flex: 1, marginBottom: 24 }}>
         {p.description}
       </p>
 
       <div style={{ marginBottom: 20 }}>
         <span style={{
           display: 'inline-block',
-          background: 'rgba(26,107,138,0.1)', color: '#1A6B8A',
+          background: 'rgba(126,200,227,0.15)', color: '#7EC8E3',
           fontSize: 12, fontWeight: 600,
           padding: '5px 12px', borderRadius: 100, letterSpacing: '0.03em',
         }}>{p.highlight}</span>
@@ -172,7 +174,7 @@ export default function Programs() {
   }, [])
 
   return (
-    <section id="programs" ref={sectionRef} style={{ background: 'rgba(255,255,255,0.75)', padding: '80px 0 100px' }}>
+    <section id="programs" ref={sectionRef} style={{ background: 'transparent', padding: '80px 0 100px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
         <div ref={headerRef} style={{ maxWidth: 600, marginBottom: 64 }}>
@@ -183,12 +185,12 @@ export default function Programs() {
           <h2 style={{
             fontFamily: "'DM Serif Display', Georgia, serif",
             fontSize: 'clamp(2rem, 4vw, 3rem)',
-            color: '#0D2B3E', lineHeight: 1.15, marginBottom: 16,
+            color: '#ffffff', lineHeight: 1.15, marginBottom: 16,
           }}>
             Coaching built for how you{' '}
             <em style={{ color: '#7EC8E3', fontStyle: 'italic' }}>actually live.</em>
           </h2>
-          <p style={{ fontSize: 18, color: 'rgba(13,43,62,0.6)', lineHeight: 1.65 }}>
+          <p style={{ fontSize: 18, color: 'rgba(255,255,255,0.65)', lineHeight: 1.65 }}>
             Whether you're chasing your first finish line or gunning for Kona, there's a path designed for you.
           </p>
         </div>

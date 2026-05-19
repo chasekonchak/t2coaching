@@ -80,7 +80,7 @@ export default function Testimonials() {
   ]
 
   return (
-    <section id="testimonials" ref={sectionRef} style={{ background: 'rgba(250,250,248,0.75)', padding: '80px 0 100px', overflow: 'hidden' }}>
+    <section id="testimonials" ref={sectionRef} style={{ background: 'transparent', padding: '80px 0 100px', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
         {/* Header */}
@@ -99,7 +99,7 @@ export default function Testimonials() {
             <h2 style={{
               fontFamily: "'DM Serif Display', Georgia, serif",
               fontSize: 'clamp(2rem, 4vw, 3rem)',
-              color: '#0D2B3E', lineHeight: 1.2,
+              color: '#ffffff', lineHeight: 1.2,
             }}>
               Athletes who've crossed<br />their finish lines.
             </h2>
@@ -113,8 +113,8 @@ export default function Testimonials() {
             ].map(({ fn, d, label }) => (
               <button key={label} onClick={fn} aria-label={label} style={{
                 width: 44, height: 44, borderRadius: '50%',
-                border: '1px solid rgba(0,0,0,0.1)',
-                background: '#fff', color: '#0D2B3E',
+                border: '1px solid rgba(255,255,255,0.15)',
+                background: 'rgba(8,18,32,0.5)', color: '#ffffff',
                 cursor: 'pointer',
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
               }}>
@@ -141,11 +141,13 @@ export default function Testimonials() {
               onClick={() => i !== 0 && setActive((active + i) % TESTIMONIALS.length)}
               className={prominence === 'tertiary' ? 't-card-3' : ''}
               style={{
-                background: '#ffffff',
-                border: `1px solid ${prominence === 'primary' ? '#7EC8E3' : 'rgba(0,0,0,0.07)'}`,
+                background: 'rgba(8,18,32,0.7)',
+                backdropFilter: 'blur(16px)',
+                WebkitBackdropFilter: 'blur(16px)',
+                border: `1px solid ${prominence === 'primary' ? '#7EC8E3' : 'rgba(255,255,255,0.1)'}`,
                 borderRadius: 20,
                 padding: 28,
-                boxShadow: prominence === 'primary' ? '0 8px 32px rgba(126,200,227,0.15)' : 'none',
+                boxShadow: prominence === 'primary' ? '0 8px 32px rgba(126,200,227,0.2)' : 'none',
                 transform: prominence === 'primary' ? 'scale(1.01)' : 'scale(1)',
                 opacity: prominence === 'tertiary' ? 0.55 : 1,
                 cursor: i !== 0 ? 'pointer' : 'default',
@@ -153,7 +155,7 @@ export default function Testimonials() {
             >
               <Stars />
               <blockquote style={{
-                fontSize: 15, color: 'rgba(13,43,62,0.75)',
+                fontSize: 15, color: 'rgba(255,255,255,0.82)',
                 lineHeight: 1.7, marginBottom: 22,
               }}>"{t.quote}"</blockquote>
               <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -165,8 +167,8 @@ export default function Testimonials() {
                   <span style={{ color: '#fff', fontSize: 13, fontWeight: 700 }}>{t.name.charAt(0)}</span>
                 </div>
                 <div>
-                  <p style={{ fontSize: 14, fontWeight: 600, color: '#0D2B3E' }}>{t.name}</p>
-                  <p style={{ fontSize: 12, color: 'rgba(13,43,62,0.45)' }}>{t.tag}</p>
+                  <p style={{ fontSize: 14, fontWeight: 600, color: '#ffffff' }}>{t.name}</p>
+                  <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.5)' }}>{t.tag}</p>
                 </div>
               </div>
             </div>
@@ -179,7 +181,7 @@ export default function Testimonials() {
             <button key={i} onClick={() => setActive(i)} aria-label={`Go to ${i + 1}`} style={{
               borderRadius: 100, border: 'none', cursor: 'pointer', padding: 0,
               width: i === active ? 24 : 8, height: 8,
-              background: i === active ? '#1A6B8A' : 'rgba(0,0,0,0.18)',
+              background: i === active ? '#7EC8E3' : 'rgba(255,255,255,0.2)',
               transition: 'all 0.3s ease',
             }} />
           ))}

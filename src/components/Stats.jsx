@@ -51,15 +51,15 @@ function StatCard({ value, suffix, label, sub, index }) {
         <div ref={numRef} style={{
           fontFamily: "'DM Serif Display', Georgia, serif",
           fontSize: 'clamp(2.8rem, 5vw, 4.5rem)',
-          color: '#0D2B3E', lineHeight: 1,
+          color: '#ffffff', lineHeight: 1,
         }}>0{suffix}</div>
         <div style={{
           position: 'absolute', bottom: -8, left: '50%', transform: 'translateX(-50%)',
           width: 32, height: 2, background: '#F5A623', borderRadius: 2,
         }} />
       </div>
-      <p style={{ fontSize: 15, fontWeight: 600, color: '#0D2B3E', marginTop: 8, marginBottom: 5 }}>{label}</p>
-      <p style={{ fontSize: 13, color: 'rgba(13,43,62,0.5)', lineHeight: 1.4 }}>{sub}</p>
+      <p style={{ fontSize: 15, fontWeight: 600, color: 'rgba(255,255,255,0.9)', marginTop: 8, marginBottom: 5 }}>{label}</p>
+      <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.5)', lineHeight: 1.4 }}>{sub}</p>
     </div>
   )
 }
@@ -81,9 +81,9 @@ export default function Stats() {
 
   return (
     <section ref={sectionRef} style={{
-      background: 'rgba(250,250,248,0.75)',
+      background: 'transparent',
       padding: '80px 0 100px',
-      borderBottom: '1px solid rgba(0,0,0,0.06)',
+      borderBottom: '1px solid rgba(255,255,255,0.08)',
     }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
         <div ref={eyebrowRef} style={{
@@ -91,7 +91,7 @@ export default function Stats() {
           gap: 12, marginBottom: 64,
         }}>
           <div style={{ height: 1, width: 48, background: '#7EC8E3' }} />
-          <span style={{ fontSize: 11, fontWeight: 600, color: '#1A6B8A', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+          <span style={{ fontSize: 11, fontWeight: 600, color: 'rgba(255,255,255,0.55)', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
             By the Numbers
           </span>
           <div style={{ height: 1, width: 48, background: '#7EC8E3' }} />
