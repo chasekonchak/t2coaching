@@ -64,6 +64,12 @@ body {
   to   { transform: translateX(-50%); }
 }
 
+/* Race course dot pulse */
+@keyframes rc-pulse {
+  0%   { transform: translate(-50%, -50%) scale(1);   opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(2.8); opacity: 0; }
+}
+
 /* Word-reveal clip containers — must have overflow: hidden */
 .wr-outer {
   display: inline-block;

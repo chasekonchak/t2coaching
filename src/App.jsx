@@ -1,5 +1,6 @@
 import './App.css'
 import Nav from './components/Nav'
+import RaceCourse from './components/RaceCourse'
 import Hero from './components/Hero'
 import SocialProof from './components/SocialProof'
 import Stats from './components/Stats'
@@ -14,6 +15,7 @@ import Footer from './components/Footer'
 export default function App() {
   return (
     <>
+      <RaceCourse />
       <Nav />
       <Hero />
       <SocialProof />
