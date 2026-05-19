@@ -27,7 +27,7 @@ body {
   min-height: 100svh;
 }
 
-/* Responsive grid helpers used across components */
+/* Responsive grid helpers */
 @media (max-width: 767px) {
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .programs-grid { grid-template-columns: 1fr; }
@@ -35,6 +35,8 @@ body {
   .why-grid { grid-template-columns: 1fr; }
   .testimonials-grid { grid-template-columns: 1fr; }
   .t-card-3 { display: none; }
+  .why-desktop-track { display: none !important; }
+  .why-mobile-grid { display: grid !important; }
 }
 @media (min-width: 768px) {
   .programs-grid { grid-template-columns: repeat(3, 1fr); }
@@ -42,10 +44,30 @@ body {
   .why-grid { grid-template-columns: repeat(2, 1fr); }
   .testimonials-grid { grid-template-columns: repeat(2, 1fr); }
   .footer-row { flex-direction: row; align-items: center; justify-content: space-between; }
+  /* WhyT2 horizontal scroll section */
+  .why-section { height: 100vh; overflow: hidden; }
+  .why-desktop-track { display: block !important; overflow: hidden; }
+  .why-mobile-grid { display: none !important; }
 }
 @media (min-width: 1024px) {
   .stats-grid { grid-template-columns: repeat(4, 1fr); }
   .about-grid { grid-template-columns: repeat(2, 1fr); }
   .testimonials-grid { grid-template-columns: repeat(3, 1fr); }
   .t-card-3 { display: block; }
+}
+
+/* Infinite marquee */
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* Word-reveal clip containers — must have overflow: hidden */
+.wr-outer {
+  display: inline-block;
+  overflow: hidden;
+  vertical-align: bottom;
+}
+.wr-inner {
+  display: block;
 }

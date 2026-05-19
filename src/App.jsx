@@ -2,6 +2,7 @@ import './App.css'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
 import Stats from './components/Stats'
+import Marquee from './components/Marquee'
 import Programs from './components/Programs'
 import About from './components/About'
 import WhyT2 from './components/WhyT2'
@@ -15,6 +16,7 @@ export default function App() {
       <Nav />
       <Hero />
       <Stats />
+      <Marquee />
       <Programs />
       <About />
       <WhyT2 />

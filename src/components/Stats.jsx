@@ -6,14 +6,14 @@ gsap.registerPlugin(ScrollTrigger)
 
 const STATS = [
   { value: 30, suffix: '+', label: 'Years Experience', sub: 'Elite coaching since 1994' },
-  { value: 1, suffix: '', label: 'Kona Champion', sub: 'The pinnacle of the sport' },
-  { value: 500, suffix: '+', label: 'Athletes Coached', sub: 'From first-timers to qualifiers' },
-  { value: 3, suffix: '', label: 'Disciplines. 1 Coach.', sub: 'Swim, bike, run — all mastered' },
+  { value: 1,  suffix: '',  label: 'Kona Champion',    sub: 'The pinnacle of the sport' },
+  { value: 500,suffix: '+', label: 'Athletes Coached', sub: 'From first-timers to qualifiers' },
+  { value: 3,  suffix: '',  label: 'Disciplines. 1 Coach.', sub: 'Swim, bike, run — all mastered' },
 ]
 
 function StatCard({ value, suffix, label, sub, index }) {
   const cardRef = useRef(null)
-  const numRef = useRef(null)
+  const numRef  = useRef(null)
   const animated = useRef(false)
 
   useEffect(() => {
@@ -21,11 +21,14 @@ function StatCard({ value, suffix, label, sub, index }) {
     if (!card) return
     const obj = { val: 0 }
 
+    // Alternate: even → from left, odd → from right
+    const fromX = index % 2 === 0 ? -55 : 55
+
     gsap.fromTo(card,
-      { y: 32, opacity: 0 },
+      { x: fromX, y: 20, opacity: 0 },
       {
-        y: 0, opacity: 1,
-        duration: 0.65, delay: index * 0.12, ease: 'power2.out',
+        x: 0, y: 0, opacity: 1,
+        duration: 0.75, delay: index * 0.1, ease: 'power3.out',
         scrollTrigger: { trigger: card, start: 'top 82%', once: true },
         onComplete: () => {
           if (animated.current) return
@@ -43,9 +46,7 @@ function StatCard({ value, suffix, label, sub, index }) {
   }, [value, suffix, index])
 
   return (
-    <div ref={cardRef} style={{
-      display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center',
-    }}>
+    <div ref={cardRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', textAlign: 'center' }}>
       <div style={{ position: 'relative', marginBottom: 16 }}>
         <div ref={numRef} style={{
           fontFamily: "'DM Serif Display', Georgia, serif",
@@ -72,8 +73,8 @@ export default function Stats() {
     const eyebrow = eyebrowRef.current
     if (!section || !eyebrow) return
     gsap.fromTo(eyebrow,
-      { y: 20, opacity: 0 },
-      { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out',
+      { y: 24, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out',
         scrollTrigger: { trigger: section, start: 'top 82%', once: true } }
     )
   }, [])
@@ -90,10 +91,9 @@ export default function Stats() {
           gap: 12, marginBottom: 64,
         }}>
           <div style={{ height: 1, width: 48, background: '#7EC8E3' }} />
-          <span style={{
-            fontSize: 11, fontWeight: 600, color: '#1A6B8A',
-            letterSpacing: '0.2em', textTransform: 'uppercase',
-          }}>By the Numbers</span>
+          <span style={{ fontSize: 11, fontWeight: 600, color: '#1A6B8A', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+            By the Numbers
+          </span>
           <div style={{ height: 1, width: 48, background: '#7EC8E3' }} />
         </div>
 

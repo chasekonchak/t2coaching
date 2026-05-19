@@ -8,36 +8,52 @@ const CREDS = ['USAT Certified Coach', 'USA Cycling Certified', 'USA Swimming Ce
 
 export default function About() {
   const sectionRef = useRef(null)
-  const textRef = useRef(null)
-  const imageRef = useRef(null)
-  const quoteRef = useRef(null)
+  const textRef    = useRef(null)
+  const imageRef   = useRef(null)
+  const quoteRef   = useRef(null)
+  const credsRef   = useRef([])
 
   useEffect(() => {
     const section = sectionRef.current
     if (!section) return
 
-    const text = textRef.current
+    const text  = textRef.current
     const image = imageRef.current
     const quote = quoteRef.current
 
+    // Text column slides in from left
     if (text) {
-      gsap.fromTo(text, { x: -50, opacity: 0 }, {
-        x: 0, opacity: 1, duration: 0.8, ease: 'power2.out',
+      gsap.fromTo(text, { x: -70, opacity: 0 }, {
+        x: 0, opacity: 1, duration: 0.9, ease: 'power3.out',
         scrollTrigger: { trigger: section, start: 'top 78%', once: true },
       })
     }
+
+    // Image column slides in from right
     if (image) {
-      gsap.fromTo(image, { x: 50, opacity: 0 }, {
-        x: 0, opacity: 1, duration: 0.8, delay: 0.15, ease: 'power2.out',
+      gsap.fromTo(image, { x: 70, opacity: 0 }, {
+        x: 0, opacity: 1, duration: 0.9, delay: 0.12, ease: 'power3.out',
         scrollTrigger: { trigger: section, start: 'top 78%', once: true },
       })
     }
+
+    // Pull quote rises up
     if (quote) {
-      gsap.fromTo(quote, { y: 30, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.6, ease: 'power2.out',
+      gsap.fromTo(quote, { y: 40, opacity: 0 }, {
+        y: 0, opacity: 1, duration: 0.7, ease: 'power2.out',
         scrollTrigger: { trigger: quote, start: 'top 86%', once: true },
       })
     }
+
+    // Credential tags stagger in from below
+    credsRef.current.forEach((el, i) => {
+      if (!el) return
+      gsap.fromTo(el,
+        { y: 20, opacity: 0, scale: 0.92 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.5, delay: 0.8 + i * 0.1, ease: 'back.out(1.6)',
+          scrollTrigger: { trigger: section, start: 'top 78%', once: true } }
+      )
+    })
   }, [])
 
   return (
@@ -49,10 +65,9 @@ export default function About() {
           <div ref={textRef}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
               <div style={{ width: 32, height: 1, background: '#F5A623' }} />
-              <span style={{
-                fontSize: 11, fontWeight: 600, color: '#F5A623',
-                letterSpacing: '0.2em', textTransform: 'uppercase',
-              }}>About Wendy</span>
+              <span style={{ fontSize: 11, fontWeight: 600, color: '#F5A623', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
+                About Wendy
+              </span>
             </div>
 
             <h2 style={{
@@ -61,7 +76,8 @@ export default function About() {
               color: '#0D2B3E', lineHeight: 1.2, marginBottom: 28,
             }}>
               I've been in your shoes —<br />
-              <em style={{ color: '#1A6B8A', fontStyle: 'italic' }}>and on that finish line.</em>
+              and on that{' '}
+              <em style={{ color: '#7EC8E3', fontStyle: 'italic' }}>finish line.</em>
             </h2>
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: 18, marginBottom: 32 }}>
@@ -74,10 +90,9 @@ export default function About() {
               ))}
             </div>
 
-            {/* Credentials */}
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
-              {CREDS.map(c => (
-                <span key={c} style={{
+              {CREDS.map((c, i) => (
+                <span key={c} ref={el => credsRef.current[i] = el} style={{
                   display: 'inline-block',
                   border: '1px solid rgba(126,200,227,0.55)',
                   color: '#1A6B8A',
@@ -90,10 +105,8 @@ export default function About() {
 
           {/* Image + Quote */}
           <div ref={imageRef} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
-            {/* Photo placeholder */}
             <div style={{
-              position: 'relative', borderRadius: 20, overflow: 'hidden',
-              aspectRatio: '4 / 5',
+              position: 'relative', borderRadius: 20, overflow: 'hidden', aspectRatio: '4 / 5',
               background: 'linear-gradient(135deg, #0D2B3E 0%, #1A6B8A 45%, #4AABCC 80%, #7EC8E3 100%)',
             }}>
               <div style={{
@@ -116,7 +129,6 @@ export default function About() {
               <div style={{ position: 'absolute', bottom: 16, left: 16, width: 36, height: 36, borderBottom: '2px solid rgba(245,166,35,0.55)', borderLeft: '2px solid rgba(245,166,35,0.55)' }} />
             </div>
 
-            {/* Pull quote */}
             <div ref={quoteRef} style={{ background: '#0D2B3E', borderRadius: 18, padding: '28px 28px 24px', position: 'relative' }}>
               <div style={{
                 position: 'absolute', top: 12, left: 22,
@@ -126,8 +138,7 @@ export default function About() {
               <blockquote style={{
                 fontFamily: "'DM Serif Display', Georgia, serif",
                 fontSize: 'clamp(1rem, 1.8vw, 1.15rem)',
-                color: '#ffffff', fontStyle: 'italic',
-                lineHeight: 1.55, paddingTop: 20,
+                color: '#ffffff', fontStyle: 'italic', lineHeight: 1.55, paddingTop: 20,
               }}>
                 Crossing that Kona finish line changed everything I understand about what athletes are capable of. I bring that to every training plan I write.
               </blockquote>

@@ -45,142 +45,157 @@ const PROGRAMS = [
         <path d="M13 8V6M27 8V6" strokeLinecap="round" />
         <path d="M6 18h28" />
         <path d="M13 26h5M13 31h10" strokeLinecap="round" />
-        <path d="M27 27l3 3 5-5" strokeLinecap="round" strokeLinejoin="round" />
       </svg>
     ),
   },
 ]
 
+function ProgramCard({ program, index }) {
+  const cardRef = useRef(null)
+
+  useEffect(() => {
+    const el = cardRef.current
+    if (!el) return
+    // Alternating: left → right → left
+    const fromX = index % 2 === 0 ? -60 : 60
+    gsap.fromTo(el,
+      { x: fromX, y: 30, opacity: 0 },
+      {
+        x: 0, y: 0, opacity: 1,
+        duration: 0.8, delay: index * 0.1, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 85%', once: true },
+      }
+    )
+  }, [index])
+
+  const onMouseMove = (e) => {
+    const el = cardRef.current
+    if (!el) return
+    const rect = el.getBoundingClientRect()
+    const rotateX = ((e.clientY - rect.top - rect.height / 2) / rect.height) * -7
+    const rotateY = ((e.clientX - rect.left - rect.width / 2) / rect.width) * 7
+    gsap.to(el, { rotateX, rotateY, transformPerspective: 900, duration: 0.25, ease: 'power2.out' })
+  }
+
+  const onMouseLeave = () => {
+    gsap.to(cardRef.current, { rotateX: 0, rotateY: 0, duration: 0.65, ease: 'elastic.out(1, 0.4)' })
+  }
+
+  const p = program
+  return (
+    <div
+      ref={cardRef}
+      onMouseMove={onMouseMove}
+      onMouseLeave={onMouseLeave}
+      style={{
+        position: 'relative',
+        display: 'flex', flexDirection: 'column',
+        background: '#FAFAF8',
+        border: '1px solid rgba(0,0,0,0.07)',
+        borderRadius: 20,
+        padding: '36px 32px 32px',
+        willChange: 'transform',
+        transformStyle: 'preserve-3d',
+      }}
+    >
+      {p.badge && (
+        <div style={{ position: 'absolute', top: -13, left: 28 }}>
+          <span style={{
+            display: 'inline-block',
+            background: p.badgeColor, color: '#fff',
+            fontSize: 11, fontWeight: 600,
+            padding: '4px 12px', borderRadius: 100, letterSpacing: '0.04em',
+          }}>{p.badge}</span>
+        </div>
+      )}
+
+      <div style={{
+        width: 52, height: 52, borderRadius: 12,
+        background: 'rgba(126,200,227,0.12)', color: '#1A6B8A',
+        display: 'flex', alignItems: 'center', justifyContent: 'center',
+        marginBottom: 24, flexShrink: 0,
+      }}>{p.icon}</div>
+
+      <h3 style={{
+        fontFamily: "'DM Serif Display', Georgia, serif",
+        fontSize: 20, color: '#0D2B3E',
+        lineHeight: 1.3, marginBottom: 12,
+      }}>{p.title}</h3>
+
+      <p style={{ fontSize: 14, color: 'rgba(13,43,62,0.58)', lineHeight: 1.72, flex: 1, marginBottom: 24 }}>
+        {p.description}
+      </p>
+
+      <div style={{ marginBottom: 20 }}>
+        <span style={{
+          display: 'inline-block',
+          background: 'rgba(26,107,138,0.1)', color: '#1A6B8A',
+          fontSize: 12, fontWeight: 600,
+          padding: '5px 12px', borderRadius: 100, letterSpacing: '0.03em',
+        }}>{p.highlight}</span>
+      </div>
+
+      <a
+        href="https://t2coaching.com/calendar/"
+        target="_blank" rel="noopener noreferrer"
+        style={{
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          gap: 8, whiteSpace: 'nowrap',
+          background: '#0D2B3E', color: '#fff',
+          fontSize: 14, fontWeight: 600,
+          padding: '14px 24px', borderRadius: 12,
+          textDecoration: 'none',
+        }}
+      >
+        Book a Call
+        <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+        </svg>
+      </a>
+    </div>
+  )
+}
+
 export default function Programs() {
   const sectionRef = useRef(null)
-  const headerRef = useRef(null)
-  const cardsRef = useRef([])
+  const headerRef  = useRef(null)
 
   useEffect(() => {
     const section = sectionRef.current
-    const header = headerRef.current
-    if (!section) return
-
-    if (header) {
-      gsap.fromTo(header,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.65, ease: 'power2.out',
-          scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
-      )
-    }
-
-    cardsRef.current.forEach((card, i) => {
-      if (!card) return
-      gsap.fromTo(card,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.7, delay: i * 0.14, ease: 'power2.out',
-          scrollTrigger: { trigger: card, start: 'top 85%', once: true } }
-      )
-    })
+    const header  = headerRef.current
+    if (!section || !header) return
+    gsap.fromTo(header,
+      { y: 36, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.7, ease: 'power2.out',
+        scrollTrigger: { trigger: section, start: 'top 80%', once: true } }
+    )
   }, [])
 
   return (
     <section id="programs" ref={sectionRef} style={{ background: '#ffffff', padding: '80px 0 100px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
-        {/* Header */}
         <div ref={headerRef} style={{ maxWidth: 600, marginBottom: 64 }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 18 }}>
             <div style={{ width: 32, height: 1, background: '#F5A623' }} />
-            <span style={{
-              fontSize: 11, fontWeight: 600, color: '#F5A623',
-              letterSpacing: '0.2em', textTransform: 'uppercase',
-            }}>Programs</span>
+            <span style={{ fontSize: 11, fontWeight: 600, color: '#F5A623', letterSpacing: '0.2em', textTransform: 'uppercase' }}>Programs</span>
           </div>
           <h2 style={{
             fontFamily: "'DM Serif Display', Georgia, serif",
             fontSize: 'clamp(2rem, 4vw, 3rem)',
             color: '#0D2B3E', lineHeight: 1.15, marginBottom: 16,
           }}>
-            Coaching built for how you actually live.
+            Coaching built for how you{' '}
+            <em style={{ color: '#7EC8E3', fontStyle: 'italic' }}>actually live.</em>
           </h2>
           <p style={{ fontSize: 18, color: 'rgba(13,43,62,0.6)', lineHeight: 1.65 }}>
             Whether you're chasing your first finish line or gunning for Kona, there's a path designed for you.
           </p>
         </div>
 
-        {/* Cards */}
         <div className="programs-grid" style={{ display: 'grid', gap: 24 }}>
           {PROGRAMS.map((p, i) => (
-            <div
-              key={p.title}
-              ref={el => cardsRef.current[i] = el}
-              style={{
-                position: 'relative',
-                display: 'flex', flexDirection: 'column',
-                background: '#FAFAF8',
-                border: '1px solid rgba(0,0,0,0.07)',
-                borderRadius: 20,
-                padding: '36px 32px 32px',
-              }}
-            >
-              {/* Badge */}
-              {p.badge && (
-                <div style={{ position: 'absolute', top: -13, left: 28 }}>
-                  <span style={{
-                    display: 'inline-block',
-                    background: p.badgeColor, color: '#fff',
-                    fontSize: 11, fontWeight: 600,
-                    padding: '4px 12px', borderRadius: 100, letterSpacing: '0.04em',
-                  }}>{p.badge}</span>
-                </div>
-              )}
-
-              {/* Icon */}
-              <div style={{
-                width: 52, height: 52, borderRadius: 12,
-                background: 'rgba(126,200,227,0.12)',
-                color: '#1A6B8A',
-                display: 'flex', alignItems: 'center', justifyContent: 'center',
-                marginBottom: 24, flexShrink: 0,
-              }}>{p.icon}</div>
-
-              <h3 style={{
-                fontFamily: "'DM Serif Display', Georgia, serif",
-                fontSize: 20, color: '#0D2B3E',
-                lineHeight: 1.3, marginBottom: 12,
-              }}>{p.title}</h3>
-
-              <p style={{
-                fontSize: 14, color: 'rgba(13,43,62,0.58)',
-                lineHeight: 1.72, flex: 1, marginBottom: 24,
-              }}>{p.description}</p>
-
-              {/* Highlight */}
-              <div style={{ marginBottom: 20 }}>
-                <span style={{
-                  display: 'inline-block',
-                  background: 'rgba(26,107,138,0.1)',
-                  color: '#1A6B8A',
-                  fontSize: 12, fontWeight: 600,
-                  padding: '5px 12px', borderRadius: 100, letterSpacing: '0.03em',
-                }}>{p.highlight}</span>
-              </div>
-
-              {/* CTA */}
-              <a
-                href="https://t2coaching.com/calendar/"
-                target="_blank" rel="noopener noreferrer"
-                style={{
-                  display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  gap: 8, whiteSpace: 'nowrap',
-                  background: '#0D2B3E', color: '#fff',
-                  fontSize: 14, fontWeight: 600,
-                  padding: '14px 24px', borderRadius: 12,
-                  textDecoration: 'none',
-                }}
-              >
-                Book a Call
-                <svg width="15" height="15" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                </svg>
-              </a>
-            </div>
+            <ProgramCard key={p.title} program={p} index={i} />
           ))}
         </div>
       </div>

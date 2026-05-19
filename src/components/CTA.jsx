@@ -4,22 +4,61 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
+// Word-by-word wipe reveal (same pattern as Hero)
+function Words({ text, style }) {
+  return (
+    <>
+      {text.split(' ').map((word, i, arr) => (
+        <span key={i} className="wr-outer" style={{ marginRight: i < arr.length - 1 ? '0.28em' : 0 }}>
+          <span className="wr-inner" style={style}>{word}</span>
+        </span>
+      ))}
+    </>
+  )
+}
+
 export default function CTA() {
-  const sectionRef = useRef(null)
-  const contentRef = useRef(null)
+  const sectionRef  = useRef(null)
+  const eyebrowRef  = useRef(null)
+  const headlineRef = useRef(null)
+  const subRef      = useRef(null)
+  const btnRef      = useRef(null)
+  const noteRef     = useRef(null)
 
   useEffect(() => {
-    const section = sectionRef.current
-    const content = contentRef.current
-    if (!section || !content) return
+    const section  = sectionRef.current
+    const eyebrow  = eyebrowRef.current
+    const headline = headlineRef.current
+    const sub      = subRef.current
+    const btn      = btnRef.current
+    const note     = noteRef.current
+    if (!section || !eyebrow || !headline || !sub || !btn || !note) return
 
-    gsap.fromTo(Array.from(content.children),
-      { y: 35, opacity: 0 },
-      {
-        y: 0, opacity: 1, duration: 0.7, stagger: 0.14, ease: 'power2.out',
-        scrollTrigger: { trigger: section, start: 'top 76%', once: true },
-      }
-    )
+    const words = headline.querySelectorAll('.wr-inner')
+
+    const tl = gsap.timeline({
+      scrollTrigger: { trigger: section, start: 'top 74%', once: true },
+    })
+
+    tl.fromTo(eyebrow,
+        { y: 28, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.6, ease: 'power2.out' })
+      .fromTo(words,
+        { yPercent: 110 },
+        { yPercent: 0, duration: 0.8, stagger: 0.055, ease: 'power3.out' },
+        '-=0.3')
+      .fromTo(sub,
+        { y: 30, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.65, ease: 'power2.out' },
+        '-=0.45')
+      .fromTo(btn,
+        { y: 28, opacity: 0, scale: 0.95 },
+        { y: 0, opacity: 1, scale: 1, duration: 0.55, ease: 'back.out(1.4)' },
+        '-=0.35')
+      .fromTo(note,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.4 },
+        '-=0.1')
   }, [])
 
   return (
@@ -28,7 +67,7 @@ export default function CTA() {
       padding: '100px 0 120px',
       background: 'linear-gradient(135deg, #0D2B3E 0%, #1A6B8A 50%, #0D2B3E 100%)',
     }}>
-      {/* Subtle grid */}
+      {/* Grid overlay */}
       <div style={{
         position: 'absolute', inset: 0, opacity: 0.04, pointerEvents: 'none',
         backgroundImage: 'linear-gradient(rgba(255,255,255,0.8) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.8) 1px, transparent 1px)',
@@ -46,27 +85,30 @@ export default function CTA() {
       <div style={{ position: 'absolute', bottom: 56, right: 56, width: 40, height: 40, borderRadius: '50%', border: '1px solid rgba(245,166,35,0.15)' }} />
 
       <div style={{ position: 'relative', zIndex: 10, maxWidth: 800, margin: '0 auto', padding: '0 32px', textAlign: 'center' }}>
-        <div ref={contentRef} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+        <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
 
           {/* Eyebrow */}
-          <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+          <div ref={eyebrowRef} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <div style={{ width: 40, height: 1, background: '#F5A623' }} />
-            <span style={{
-              fontSize: 11, fontWeight: 600, color: '#F5A623',
-              letterSpacing: '0.22em', textTransform: 'uppercase',
-            }}>Start Your Season</span>
+            <span style={{ fontSize: 11, fontWeight: 600, color: '#F5A623', letterSpacing: '0.22em', textTransform: 'uppercase' }}>
+              Start Your Season
+            </span>
             <div style={{ width: 40, height: 1, background: '#F5A623' }} />
           </div>
 
-          {/* Headline */}
-          <h2 style={{
+          {/* Headline — word-by-word wipe */}
+          <h2 ref={headlineRef} style={{
             fontFamily: "'DM Serif Display', Georgia, serif",
             fontSize: 'clamp(2.5rem, 6vw, 5rem)',
-            color: '#ffffff', lineHeight: 1.1,
-          }}>Ready to race smarter?</h2>
+            lineHeight: 1.1,
+          }}>
+            <Words text="Ready to" style={{ color: '#ffffff' }} />
+            {' '}
+            <Words text="race smarter?" style={{ color: '#7EC8E3', fontStyle: 'italic' }} />
+          </h2>
 
           {/* Sub */}
-          <p style={{
+          <p ref={subRef} style={{
             fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
             color: 'rgba(255,255,255,0.62)',
             maxWidth: 480, lineHeight: 1.68,
@@ -74,8 +116,9 @@ export default function CTA() {
             30 minutes with Wendy could change your entire season. No commitment required — just a real conversation about where you are and where you want to go.
           </p>
 
-          {/* CTA button */}
+          {/* CTA */}
           <a
+            ref={btnRef}
             href="https://t2coaching.com/calendar/"
             target="_blank" rel="noopener noreferrer"
             style={{
@@ -94,8 +137,7 @@ export default function CTA() {
             </svg>
           </a>
 
-          {/* Trust note */}
-          <p style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>
+          <p ref={noteRef} style={{ fontSize: 13, color: 'rgba(255,255,255,0.3)' }}>
             No sales pitch. Just a real conversation about your goals.
           </p>
         </div>
