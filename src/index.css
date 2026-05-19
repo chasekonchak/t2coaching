@@ -27,6 +27,12 @@ body {
   min-height: 100svh;
 }
 
+/* All sections stack above the fixed race course layer */
+section, footer {
+  position: relative;
+  z-index: 3;
+}
+
 /* Responsive grid helpers */
 @media (max-width: 767px) {
   .hero-grid { grid-template-columns: 1fr !important; }

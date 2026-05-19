@@ -152,7 +152,7 @@ export default function WhyT2() {
   )
 
   return (
-    <section ref={wrapRef} className="why-section" style={{ background: '#FAFAF8', position: 'relative' }}>
+    <section ref={wrapRef} className="why-section" style={{ background: 'rgba(250,250,248,0.75)', position: 'relative' }}>
 
       {/* ── DESKTOP: fixed header + horizontal track ── */}
       <div className="why-desktop-track" style={{ height: '100%', flexDirection: 'column', position: 'relative' }}>

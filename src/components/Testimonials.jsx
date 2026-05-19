@@ -80,7 +80,7 @@ export default function Testimonials() {
   ]
 
   return (
-    <section id="testimonials" ref={sectionRef} style={{ background: '#FAFAF8', padding: '80px 0 100px', overflow: 'hidden' }}>
+    <section id="testimonials" ref={sectionRef} style={{ background: 'rgba(250,250,248,0.75)', padding: '80px 0 100px', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
         {/* Header */}

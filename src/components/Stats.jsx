@@ -81,7 +81,7 @@ export default function Stats() {
 
   return (
     <section ref={sectionRef} style={{
-      background: '#FAFAF8',
+      background: 'rgba(250,250,248,0.75)',
       padding: '80px 0 100px',
       borderBottom: '1px solid rgba(0,0,0,0.06)',
     }}>

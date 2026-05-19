@@ -90,7 +90,7 @@ function ProgramCard({ program, index }) {
       style={{
         position: 'relative',
         display: 'flex', flexDirection: 'column',
-        background: '#FAFAF8',
+        background: 'rgba(250,250,248,0.88)',
         border: '1px solid rgba(0,0,0,0.07)',
         borderRadius: 20,
         padding: '36px 32px 32px',
@@ -172,7 +172,7 @@ export default function Programs() {
   }, [])
 
   return (
-    <section id="programs" ref={sectionRef} style={{ background: '#ffffff', padding: '80px 0 100px' }}>
+    <section id="programs" ref={sectionRef} style={{ background: 'rgba(255,255,255,0.75)', padding: '80px 0 100px' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
 
         <div ref={headerRef} style={{ maxWidth: 600, marginBottom: 64 }}>

@@ -57,7 +57,7 @@ export default function About() {
   }, [])
 
   return (
-    <section id="about" ref={sectionRef} style={{ background: '#ffffff', padding: '80px 0 100px', overflow: 'hidden' }}>
+    <section id="about" ref={sectionRef} style={{ background: 'rgba(255,255,255,0.75)', padding: '80px 0 100px', overflow: 'hidden' }}>
       <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 32px' }}>
         <div className="about-grid" style={{ display: 'grid', gap: 60, alignItems: 'center' }}>
 
