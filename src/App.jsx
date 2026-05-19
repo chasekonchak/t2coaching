@@ -1,6 +1,7 @@
 import './App.css'
 import Nav from './components/Nav'
 import Hero from './components/Hero'
+import SocialProof from './components/SocialProof'
 import Stats from './components/Stats'
 import Marquee from './components/Marquee'
 import Programs from './components/Programs'
@@ -15,6 +16,7 @@ export default function App() {
     <>
       <Nav />
       <Hero />
+      <SocialProof />
       <Stats />
       <Marquee />
       <Programs />

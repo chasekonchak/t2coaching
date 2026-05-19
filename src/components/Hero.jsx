@@ -4,7 +4,6 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 gsap.registerPlugin(ScrollTrigger)
 
-// Splits text into word-reveal spans for staggered wipe animation
 function Words({ text, style }) {
   return (
     <>
@@ -17,23 +16,33 @@ function Words({ text, style }) {
   )
 }
 
+const HERO_STATS = [
+  { num: '47',  label: 'Athletes to Kona' },
+  { num: '3×',  label: 'Kona Qualifier' },
+  { num: '31yr', label: 'Coaching Career' },
+]
+
 export default function Hero() {
-  const sectionRef = useRef(null)
-  const glowRef = useRef(null)
-  const eyebrowRef = useRef(null)
+  const sectionRef  = useRef(null)
+  const glowRef     = useRef(null)
+  const eyebrowRef  = useRef(null)
   const headlineRef = useRef(null)
-  const subRef = useRef(null)
-  const ctaRef = useRef(null)
-  const scrollRef = useRef(null)
+  const subRef      = useRef(null)
+  const ctaRef      = useRef(null)
+  const statsRef    = useRef(null)
+  const scrollRef   = useRef(null)
+  const imageRef    = useRef(null)
 
   useEffect(() => {
-    const section = sectionRef.current
-    const glow = glowRef.current
-    const eyebrow = eyebrowRef.current
-    const headline = headlineRef.current
-    const sub = subRef.current
-    const cta = ctaRef.current
+    const section   = sectionRef.current
+    const glow      = glowRef.current
+    const eyebrow   = eyebrowRef.current
+    const headline  = headlineRef.current
+    const sub       = subRef.current
+    const cta       = ctaRef.current
+    const stats     = statsRef.current
     const scrollHint = scrollRef.current
+    const image     = imageRef.current
 
     if (!eyebrow || !headline || !sub || !cta || !scrollHint) return
 
@@ -56,17 +65,26 @@ export default function Hero() {
         { y: 22, opacity: 0 },
         { y: 0, opacity: 1, duration: 0.55, ease: 'power2.out' },
         '-=0.35')
+      .fromTo(stats,
+        { y: 18, opacity: 0 },
+        { y: 0, opacity: 1, duration: 0.5, ease: 'power2.out' },
+        '-=0.2')
       .fromTo(scrollHint,
         { opacity: 0 },
         { opacity: 1, duration: 0.4 },
         '-=0.1')
 
-    // Scroll hint float
+    if (image) {
+      gsap.fromTo(image,
+        { x: 60, opacity: 0 },
+        { x: 0, opacity: 1, duration: 1.1, delay: 0.7, ease: 'power3.out' }
+      )
+    }
+
     gsap.to(scrollHint, {
       y: 9, repeat: -1, yoyo: true, duration: 1.2, ease: 'sine.inOut', delay: 2.5,
     })
 
-    // Parallax the radial glow at ~0.4× scroll speed
     if (glow && section) {
       gsap.to(glow, {
         yPercent: -45,
@@ -90,7 +108,7 @@ export default function Hero() {
       overflow: 'hidden',
       background: 'linear-gradient(155deg, #0D2B3E 0%, #163d57 28%, #1A6B8A 58%, #3a9abc 78%, #7EC8E3 100%)',
     }}>
-      {/* Noise / grain texture — very subtle, just enough to feel premium */}
+      {/* Noise grain */}
       <div style={{
         position: 'absolute', inset: 0, pointerEvents: 'none', zIndex: 7,
         opacity: 0.042,
@@ -99,7 +117,7 @@ export default function Hero() {
         backgroundSize: '320px 320px',
       }} />
 
-      {/* Radial glow — parallaxes at 0.4× speed via GSAP */}
+      {/* Parallax glow */}
       <div ref={glowRef} style={{
         position: 'absolute', inset: 0, pointerEvents: 'none',
         background: 'radial-gradient(ellipse 80% 60% at 65% 40%, rgba(74,171,204,0.24) 0%, transparent 70%)',
@@ -116,81 +134,185 @@ export default function Hero() {
       <div style={{ position: 'absolute', top: '25%', right: 56, width: 1, height: 180, background: 'rgba(255,255,255,0.08)' }} />
       <div style={{ position: 'absolute', top: '15%', left: '28%', height: 1, width: 120, background: 'rgba(255,255,255,0.07)' }} />
 
-      {/* Content */}
+      {/* Two-column content */}
       <div style={{
         position: 'relative', zIndex: 10,
         maxWidth: 1280, margin: '0 auto',
         padding: '128px 32px 80px', width: '100%',
       }}>
-        <div style={{ maxWidth: 760 }}>
+        <div className="hero-grid" style={{
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
+          gap: 64,
+          alignItems: 'center',
+        }}>
 
-          {/* Eyebrow */}
-          <div ref={eyebrowRef} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
-            <div style={{ width: 36, height: 1, background: '#F5A623', flexShrink: 0 }} />
-            <span style={{ color: '#F5A623', fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
-              Kona Ironman Champion
-            </span>
-          </div>
+          {/* Left — copy */}
+          <div>
+            {/* Eyebrow */}
+            <div ref={eyebrowRef} style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 28 }}>
+              <div style={{ width: 36, height: 1, background: '#F5A623', flexShrink: 0 }} />
+              <span style={{ color: '#F5A623', fontSize: 11, fontWeight: 600, letterSpacing: '0.22em', textTransform: 'uppercase' }}>
+                Kona Ironman Champion
+              </span>
+            </div>
 
-          {/* Headline — word-by-word wipe reveal */}
-          <h1 ref={headlineRef} style={{
-            fontFamily: "'DM Serif Display', Georgia, serif",
-            fontSize: 'clamp(3.2rem, 7.5vw, 7rem)',
-            lineHeight: 1.05,
-            marginBottom: 30,
-            color: '#ffffff',
-          }}>
-            <span style={{ display: 'block' }}>
-              <Words text="Coached by" />
-            </span>
-            <span style={{ display: 'block' }}>
-              <Words text="a Kona Champion." style={{ color: '#7EC8E3', fontStyle: 'italic' }} />
-            </span>
-          </h1>
+            {/* Headline */}
+            <h1 ref={headlineRef} style={{
+              fontFamily: "'Cormorant Garamond', 'DM Serif Display', Georgia, serif",
+              fontSize: 'clamp(3rem, 6.5vw, 6.5rem)',
+              lineHeight: 1.05,
+              marginBottom: 30,
+              color: '#ffffff',
+              fontWeight: 600,
+            }}>
+              <span style={{ display: 'block' }}>
+                <Words text="Coached by" />
+              </span>
+              <span style={{ display: 'block' }}>
+                <Words text="a Kona" style={{ color: '#7EC8E3', fontStyle: 'italic' }} />
+                {' '}
+                <Words text="Champion." />
+              </span>
+            </h1>
 
-          {/* Sub */}
-          <p ref={subRef} style={{
-            color: 'rgba(255,255,255,0.72)',
-            fontSize: 'clamp(1.1rem, 2vw, 1.35rem)',
-            fontWeight: 300, lineHeight: 1.7,
-            maxWidth: 520, marginBottom: 44,
-          }}>
-            Personalized triathlon plans built around your life —{' '}
-            <strong style={{ color: 'rgba(255,255,255,0.95)', fontWeight: 500 }}>not a template.</strong>
-            <br />
-            Train smarter with 30+ years of elite coaching experience.
-          </p>
+            {/* Sub */}
+            <p ref={subRef} style={{
+              color: 'rgba(255,255,255,0.72)',
+              fontSize: 'clamp(1rem, 1.8vw, 1.25rem)',
+              fontWeight: 300, lineHeight: 1.7,
+              maxWidth: 480, marginBottom: 40,
+            }}>
+              Personalized triathlon plans built around your life —{' '}
+              <strong style={{ color: 'rgba(255,255,255,0.95)', fontWeight: 500 }}>not a template.</strong>
+              {' '}Train smarter. Race harder. Get the coaching you actually deserve.
+            </p>
 
-          {/* CTAs */}
-          <div ref={ctaRef} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 16 }}>
-            <a
-              href="https://t2coaching.com/calendar/"
-              target="_blank" rel="noopener noreferrer"
-              style={{
+            {/* CTAs */}
+            <div ref={ctaRef} style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', gap: 14 }}>
+              <a
+                href="https://t2coaching.com/calendar/"
+                target="_blank" rel="noopener noreferrer"
+                style={{
+                  display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
+                  gap: 8, whiteSpace: 'nowrap',
+                  background: '#C9A84C', color: '#fff',
+                  fontSize: 16, fontWeight: 700,
+                  padding: '16px 36px', borderRadius: 100,
+                  textDecoration: 'none',
+                  boxShadow: '0 8px 32px rgba(201,168,76,0.45)',
+                  letterSpacing: '0.01em',
+                }}
+              >
+                Book Your Free Call
+                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
+              <a href="#programs" style={{
                 display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
                 gap: 8, whiteSpace: 'nowrap',
-                background: '#D4201A', color: '#fff',
-                fontSize: 16, fontWeight: 600,
-                padding: '16px 36px', borderRadius: 100,
+                color: '#7EC8E3',
+                fontSize: 16, fontWeight: 500,
+                padding: '15px 32px', borderRadius: 100,
                 textDecoration: 'none',
-                boxShadow: '0 8px 32px rgba(212,32,26,0.35)',
-              }}
-            >
-              Book Your Free Call
-              <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </a>
-            <a href="#programs" style={{
-              display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
-              gap: 8, whiteSpace: 'nowrap',
-              color: 'rgba(255,255,255,0.8)',
-              fontSize: 16, fontWeight: 500,
-              padding: '15px 32px', borderRadius: 100,
-              textDecoration: 'none',
-              border: '1px solid rgba(255,255,255,0.25)',
-            }}>View Programs</a>
+                border: '1px solid rgba(126,200,227,0.45)',
+              }}>View Programs</a>
+            </div>
+
+            {/* Real stats */}
+            <div ref={statsRef} style={{
+              display: 'flex', gap: 40, marginTop: 52,
+              paddingTop: 28,
+              borderTop: '1px solid rgba(255,255,255,0.12)',
+            }}>
+              {HERO_STATS.map(({ num, label }) => (
+                <div key={label}>
+                  <div style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: 'clamp(1.6rem, 2.5vw, 2.2rem)',
+                    fontWeight: 600, color: '#ffffff', lineHeight: 1,
+                  }}>{num}</div>
+                  <div style={{
+                    fontSize: 12, color: 'rgba(255,255,255,0.48)',
+                    marginTop: 5, letterSpacing: '0.04em',
+                  }}>{label}</div>
+                </div>
+              ))}
+            </div>
           </div>
+
+          {/* Right — image */}
+          <div ref={imageRef} className="hero-image-col" style={{ position: 'relative' }}>
+            <div style={{
+              position: 'relative',
+              borderRadius: 24,
+              overflow: 'hidden',
+              aspectRatio: '3 / 4',
+              background: 'linear-gradient(160deg, #0D2B3E 0%, #1A6B8A 50%, #4AABCC 85%, #7EC8E3 100%)',
+              boxShadow: '0 40px 80px rgba(0,0,0,0.35)',
+            }}>
+              {/* Drop wendy-hero.jpg into /public to replace this placeholder */}
+              <img
+                src="/wendy-hero.jpg"
+                alt="Wendy Mader — Kona Ironman Champion"
+                style={{
+                  position: 'absolute', inset: 0,
+                  width: '100%', height: '100%',
+                  objectFit: 'cover', objectPosition: 'center top',
+                }}
+                onError={e => { e.currentTarget.style.display = 'none' }}
+              />
+              {/* Placeholder shown when no image */}
+              <div style={{
+                position: 'absolute', inset: 0,
+                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
+                opacity: 0.45,
+              }}>
+                <svg width="72" height="72" viewBox="0 0 80 80" fill="rgba(255,255,255,0.6)">
+                  <circle cx="40" cy="27" r="13" />
+                  <path d="M14 72c0-14.4 11.6-26 26-26s26 11.6 26 26" />
+                </svg>
+                <p style={{ marginTop: 14, fontSize: 15, fontWeight: 500, color: 'rgba(255,255,255,0.7)' }}>Wendy Mader</p>
+                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>Photo coming soon</p>
+              </div>
+
+              {/* Overlay gradient — bottom */}
+              <div style={{
+                position: 'absolute', bottom: 0, left: 0, right: 0, height: '40%',
+                background: 'linear-gradient(to top, rgba(13,43,62,0.75), transparent)',
+              }} />
+
+              {/* Stat badge */}
+              <div style={{
+                position: 'absolute', bottom: 28, left: 24, right: 24,
+                background: 'rgba(13,43,62,0.88)',
+                backdropFilter: 'blur(12px)',
+                borderRadius: 14,
+                padding: '18px 20px',
+                border: '1px solid rgba(126,200,227,0.2)',
+              }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: '50%', background: '#C9A84C', flexShrink: 0 }} />
+                  <span style={{
+                    fontFamily: "'Cormorant Garamond', Georgia, serif",
+                    fontSize: 15, fontStyle: 'italic', color: '#fff',
+                    lineHeight: 1.4,
+                  }}>
+                    "Crossing that Kona finish line changed everything I understand about what athletes are capable of."
+                  </span>
+                </div>
+                <div style={{ fontSize: 11, color: '#C9A84C', fontWeight: 600, letterSpacing: '0.1em', marginTop: 10, paddingLeft: 18 }}>
+                  — WENDY MADER
+                </div>
+              </div>
+
+              {/* Corner accents */}
+              <div style={{ position: 'absolute', top: 18, right: 18, width: 40, height: 40, borderTop: '2px solid rgba(201,168,76,0.5)', borderRight: '2px solid rgba(201,168,76,0.5)' }} />
+              <div style={{ position: 'absolute', top: 18, left: 18, width: 40, height: 40, borderTop: '2px solid rgba(126,200,227,0.25)', borderLeft: '2px solid rgba(126,200,227,0.25)' }} />
+            </div>
+          </div>
+
         </div>
       </div>
 

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Serif+Display:ital@0;1&family=Inter:wght@300;400;500;600;700&display=swap');
 @import "tailwindcss";
 @source "../index.html";
 @source "./src";
@@ -29,6 +29,8 @@ body {
 
 /* Responsive grid helpers */
 @media (max-width: 767px) {
+  .hero-grid { grid-template-columns: 1fr !important; }
+  .hero-image-col { display: none !important; }
   .stats-grid { grid-template-columns: repeat(2, 1fr); }
   .programs-grid { grid-template-columns: 1fr; }
   .about-grid { grid-template-columns: 1fr; }

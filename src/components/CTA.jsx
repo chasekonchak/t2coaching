@@ -124,11 +124,11 @@ export default function CTA() {
             style={{
               display: 'inline-flex', alignItems: 'center', justifyContent: 'center',
               gap: 10, whiteSpace: 'nowrap', marginTop: 8,
-              background: '#D4201A', color: '#fff',
+              background: '#C9A84C', color: '#fff',
               fontSize: 'clamp(0.95rem, 1.5vw, 1.1rem)', fontWeight: 700,
               padding: '18px 42px', borderRadius: 100,
               textDecoration: 'none',
-              boxShadow: '0 12px 40px rgba(212,32,26,0.4)',
+              boxShadow: '0 12px 40px rgba(201,168,76,0.45)',
             }}
           >
             Book a Free Call with Wendy
