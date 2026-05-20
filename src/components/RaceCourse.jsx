@@ -36,7 +36,6 @@ export default function RaceCourse() {
   const runGRef    = useRef(null)
   const runLRef    = useRef(null)
   const dotRef     = useRef(null)
-  const ringRef    = useRef(null)
 
   useEffect(() => {
     const swimBg = swimBgRef.current
@@ -50,7 +49,6 @@ export default function RaceCourse() {
     const runG   = runGRef.current
     const runL   = runLRef.current
     const dot    = dotRef.current
-    const ring   = ringRef.current
     if (!swimL || !svg) return
 
     // All six paths share the same d, so getTotalLength is identical
@@ -108,21 +106,13 @@ export default function RaceCourse() {
         const col = drawn < L3 ? '#90e0ef' : drawn < L23 ? '#ffe566' : '#ff7043'
 
         if (dot) {
-          dot.style.display    = 'block'
-          dot.style.left       = `${px}px`
-          dot.style.top        = `${py}px`
-          dot.style.background = col
-          dot.style.boxShadow  = `0 0 10px 3px ${col}`
-        }
-        if (ring) {
-          ring.style.display      = 'block'
-          ring.style.left         = `${px}px`
-          ring.style.top          = `${py}px`
-          ring.style.borderColor  = col
+          dot.style.display = 'block'
+          dot.style.left    = `${px}px`
+          dot.style.top     = `${py}px`
+          dot.style.color   = col
         }
       } else {
-        if (dot)  dot.style.display  = 'none'
-        if (ring) ring.style.display = 'none'
+        if (dot) dot.style.display = 'none'
       }
     }
 
@@ -201,37 +191,97 @@ export default function RaceCourse() {
           <div style={{ position: 'absolute', top: 0, left: '11%',  width: 1, height: '100%', background: 'rgba(255,255,255,0.07)' }} />
           <div style={{ position: 'absolute', top: 0, right: '11%', width: 1, height: '100%', background: 'rgba(255,255,255,0.07)' }} />
         </div>
+
+        {/* Cyclist silhouette at horizon */}
+        <div style={{
+          position: 'absolute', bottom: '48%', left: '50%',
+          transform: 'translate(-50%, 50%)', pointerEvents: 'none',
+        }}>
+          <svg viewBox="0 0 300 152" width="300" height="152" fill="none" stroke="#05020d" strokeLinecap="round" strokeLinejoin="round">
+            {/* Rear wheel */}
+            <circle cx="52" cy="106" r="40" strokeWidth="8"/>
+            <circle cx="52" cy="106" r="5" fill="#05020d" stroke="none"/>
+            {/* Front wheel */}
+            <circle cx="224" cy="106" r="40" strokeWidth="8"/>
+            <circle cx="224" cy="106" r="5" fill="#05020d" stroke="none"/>
+            {/* Frame: main triangle */}
+            <polyline points="52,106 96,50 224,106" strokeWidth="7"/>
+            {/* Seat tube */}
+            <line x1="96" y1="50" x2="136" y2="106" strokeWidth="6"/>
+            {/* Seat post */}
+            <line x1="96" y1="50" x2="92" y2="26" strokeWidth="6"/>
+            {/* Saddle */}
+            <path d="M76,24 L112,24" strokeWidth="7"/>
+            {/* Top tube to fork crown */}
+            <line x1="96" y1="50" x2="168" y2="54" strokeWidth="6"/>
+            {/* Fork */}
+            <path d="M168,54 L224,106" strokeWidth="6"/>
+            {/* Aero handlebar stem */}
+            <path d="M168,54 L200,48" strokeWidth="6"/>
+            {/* Aero bar extensions */}
+            <line x1="186" y1="47" x2="186" y2="36" strokeWidth="5"/>
+            <line x1="200" y1="47" x2="200" y2="36" strokeWidth="5"/>
+            <path d="M183,36 L203,36" strokeWidth="6"/>
+            {/* Rider: helmet head */}
+            <ellipse cx="88" cy="14" rx="14" ry="11" fill="#05020d" stroke="none"/>
+            {/* Rider: flat aero torso */}
+            <path d="M82,24 C95,32 134,42 200,46 L200,54 C132,50 92,40 78,32 Z" fill="#05020d" stroke="none"/>
+            {/* Arms on bars */}
+            <path d="M188,44 L200,44" strokeWidth="8"/>
+            {/* Legs pedaling */}
+            <path d="M100,54 L90,80 L80,102" strokeWidth="9"/>
+            <path d="M106,56 L118,80 L130,100" strokeWidth="9"/>
+          </svg>
+        </div>
       </div>
 
-      {/* ══ RUN — track heat ═══════════════════════════════════════════════════ */}
+      {/* ══ RUN — finish line celebration ════════════════════════════════════ */}
       <div ref={runBgRef} style={{
         position: 'fixed', inset: 0, zIndex: 0, pointerEvents: 'none', opacity: 0,
-        background: 'linear-gradient(180deg, #0a0000 0%, #300600 20%, #6a0e00 38%, #b81e00 54%, #de3200 66%, #b42000 78%, #6e1000 100%)',
+        background: 'linear-gradient(180deg, #060412 0%, #140c28 18%, #2c1a08 34%, #7a3c00 48%, #c06400 60%, #e08800 70%, #c87000 82%, #8a4400 100%)',
       }}>
-        {/* Fiery core radiance */}
+        {/* Stadium spotlights — two cones from above */}
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, height: '65%',
+          background: [
+            'radial-gradient(ellipse 22% 90% at 28% 0%, rgba(255,230,140,0.22), transparent 70%)',
+            'radial-gradient(ellipse 22% 90% at 72% 0%, rgba(255,220,120,0.18), transparent 70%)',
+            'radial-gradient(ellipse 40% 55% at 50% 0%, rgba(255,200,80,0.10), transparent 70%)',
+          ].join(','),
+        }} />
+        {/* Warm ground glow */}
         <div style={{
           position: 'absolute', inset: 0,
-          background: 'radial-gradient(ellipse 60% 38% at 50% 60%, rgba(255,80,0,0.30), transparent 70%)',
+          background: 'radial-gradient(ellipse 65% 40% at 50% 85%, rgba(255,140,40,0.28), transparent 70%)',
         }} />
-        {/* Track lane markings */}
-        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '44%' }}>
+        {/* Track surface — lighter terracotta */}
+        <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '44%',
+          background: 'linear-gradient(180deg, #7a3a10 0%, #a04c18 40%, #b85c20 100%)',
+        }}>
+          {/* Lane lines */}
           {[1,2,3,4,5,6,7].map(i => (
             <div key={i} style={{
               position: 'absolute', top: 0, bottom: 0,
               left: `${i * 12.5}%`, width: 1,
-              background: 'rgba(255,160,60,0.12)',
+              background: 'rgba(255,200,120,0.18)',
             }} />
           ))}
-          {/* Finish line — checkered band */}
+          {/* Finish line — bold checkered, celebration-grade */}
           <div style={{
-            position: 'absolute', bottom: '20%', left: 0, right: 0, height: 10,
-            backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.2) 0px, rgba(255,255,255,0.2) 16px, transparent 16px, transparent 32px)',
+            position: 'absolute', bottom: '28%', left: 0, right: 0, height: 20,
+            backgroundImage: 'repeating-linear-gradient(90deg, rgba(255,255,255,0.9) 0px, rgba(255,255,255,0.9) 20px, rgba(0,0,0,0.5) 20px, rgba(0,0,0,0.5) 40px)',
+            boxShadow: '0 0 28px rgba(255,255,255,0.5)',
+          }} />
+          {/* Finish line glow halo */}
+          <div style={{
+            position: 'absolute', bottom: '20%', left: 0, right: 0, height: 60,
+            background: 'radial-gradient(ellipse 60% 100% at 50% 0%, rgba(255,255,255,0.18), transparent 80%)',
           }} />
         </div>
-        {/* Heat shimmer — pulses up */}
+        {/* Heat shimmer */}
         <div className="rc-heat" style={{
-          position: 'absolute', bottom: '28%', left: 0, right: 0, height: '22%',
-          background: 'linear-gradient(180deg, transparent, rgba(255,55,0,0.10), transparent)',
+          position: 'absolute', bottom: '32%', left: 0, right: 0, height: '20%',
+          background: 'linear-gradient(180deg, transparent, rgba(255,140,40,0.12), transparent)',
           pointerEvents: 'none',
         }} />
       </div>
@@ -296,18 +346,29 @@ export default function RaceCourse() {
           />
         </svg>
 
-        {/* Pulsing ring at tip */}
-        <div ref={ringRef} style={{
-          position: 'absolute', width: 18, height: 18, borderRadius: '50%',
-          border: '1.5px solid #90e0ef',
-          transform: 'translate(-50%, -50%)', display: 'none',
-          animation: 'rc-pulse 1.8s ease-out infinite',
-        }} />
-        {/* Dot at tip */}
+        {/* M-Dot triathlete figure traveling the course */}
         <div ref={dotRef} style={{
-          position: 'absolute', width: 6, height: 6, borderRadius: '50%',
-          background: '#90e0ef', transform: 'translate(-50%, -50%)', display: 'none',
-        }} />
+          position: 'absolute', width: 28, height: 36,
+          transform: 'translate(-50%, -50%)',
+          display: 'none', color: '#90e0ef',
+          filter: 'drop-shadow(0 0 7px currentColor)',
+        }}>
+          <svg viewBox="0 0 28 36" style={{ width: '100%', height: '100%' }}
+            fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
+            {/* Head */}
+            <circle cx="14" cy="4" r="3.5" stroke="none"/>
+            {/* Torso */}
+            <line x1="14" y1="7.5" x2="12.5" y2="18" strokeWidth="2.8" fill="none"/>
+            {/* Left arm (forward) */}
+            <line x1="13" y1="12" x2="6" y2="15" strokeWidth="2.2" fill="none"/>
+            {/* Right arm (back) */}
+            <line x1="13" y1="12" x2="20" y2="14" strokeWidth="2.2" fill="none"/>
+            {/* Left leg forward */}
+            <path d="M12.5 18 L8 26 L6 33" strokeWidth="2.5" fill="none"/>
+            {/* Right leg back */}
+            <path d="M12.5 18 L17 25 L19 31" strokeWidth="2.5" fill="none"/>
+          </svg>
+        </div>
       </div>
     </>
   )

@@ -25,6 +25,26 @@ const FEATURES = [
     title: 'Built for busy people.',
     body: "Life doesn't pause for training. Wendy designs plans around your real schedule — not an idealized one. Family, work, travel. Your plan bends. Your progress doesn't have to.",
   },
+  {
+    num: '05', accent: '#F5A623',
+    title: 'Every session has a purpose.',
+    body: 'No junk miles. No guesswork. Every workout has a specific objective — and you\'ll know exactly why you\'re doing it. Wendy explains the science so you execute with intention, not just compliance.',
+  },
+  {
+    num: '06', accent: '#7EC8E3',
+    title: 'Race-day nutrition is a discipline too.',
+    body: 'Bonking at mile 80 isn\'t bad luck — it\'s a fueling failure. Wendy integrates nutrition strategy directly into your training plan so your gut is race-ready long before you toe the start line.',
+  },
+  {
+    num: '07', accent: '#4AABCC',
+    title: 'The mental game, coached.',
+    body: 'The hardest miles are mental. Wendy teaches the performance mindset techniques used by elite athletes — visualization, pain management, race-day focus — so the wall stays in your rearview.',
+  },
+  {
+    num: '08', accent: '#7EC8E3',
+    title: 'Built to race for decades.',
+    body: 'Short-term peak performance and long-term athletic development are not the same thing. Wendy builds careers, not just seasons — with periodization designed to keep you healthy, improving, and racing for years.',
+  },
 ]
 
 function FeatureCard({ f, style }) {
@@ -194,7 +214,7 @@ export default function WhyT2() {
         <div style={{
           position: 'absolute', right: 48, bottom: 40,
           display: 'flex', alignItems: 'center', gap: 8,
-          color: 'rgba(13,43,62,0.3)',
+          color: 'rgba(255,255,255,0.3)',
           fontSize: 11, fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase',
         }}>
           <svg width="32" height="10" viewBox="0 0 32 10" fill="none">
