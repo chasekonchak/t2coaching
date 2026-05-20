@@ -62,7 +62,14 @@ export default function About() {
         <div className="about-grid" style={{ display: 'grid', gap: 60, alignItems: 'center' }}>
 
           {/* Text */}
-          <div ref={textRef}>
+          <div ref={textRef} style={{
+            background: 'rgba(8,18,32,0.72)',
+            backdropFilter: 'blur(20px)',
+            WebkitBackdropFilter: 'blur(20px)',
+            borderRadius: 20,
+            padding: '48px 40px',
+            border: '1px solid rgba(255,255,255,0.08)',
+          }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20 }}>
               <div style={{ width: 32, height: 1, background: '#F5A623' }} />
               <span style={{ fontSize: 11, fontWeight: 600, color: '#F5A623', letterSpacing: '0.2em', textTransform: 'uppercase' }}>
