@@ -348,16 +348,16 @@ export default function RaceCourse() {
 
         {/* M-Dot logo traveling the course */}
         <div ref={dotRef} style={{
-          position: 'absolute', width: 26, height: 28,
+          position: 'absolute', width: 26, height: 34,
           transform: 'translate(-50%, -50%)',
           display: 'none', color: '#90e0ef',
           filter: 'drop-shadow(0 0 8px currentColor)',
         }}>
-          <svg viewBox="0 0 100 108" style={{ width: '100%', height: '100%' }} fill="currentColor">
+          <svg viewBox="0 0 100 128" style={{ width: '100%', height: '100%' }} fill="currentColor">
             {/* Head circle */}
-            <circle cx="50" cy="20" r="19"/>
-            {/* M body: wide shoulders, two legs, V-notch from bottom */}
-            <path d="M10,42 L90,42 L90,105 L50,72 L10,105 Z"/>
+            <circle cx="50" cy="20" r="18"/>
+            {/* M body — two outer legs, two inner peaks, center valley (true M shape) */}
+            <polygon points="10,42 90,42 90,124 70,76 50,124 30,76 10,124"/>
           </svg>
         </div>
       </div>
