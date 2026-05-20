@@ -252,30 +252,15 @@ export default function Hero() {
               background: 'linear-gradient(160deg, #0D2B3E 0%, #1A6B8A 50%, #4AABCC 85%, #7EC8E3 100%)',
               boxShadow: '0 40px 80px rgba(0,0,0,0.35)',
             }}>
-              {/* Drop wendy-hero.jpg into /public to replace this placeholder */}
               <img
-                src="/wendy-hero.jpg"
+                src="/wendy-finish.jpg"
                 alt="Wendy Mader — Kona Ironman Champion"
                 style={{
                   position: 'absolute', inset: 0,
                   width: '100%', height: '100%',
                   objectFit: 'cover', objectPosition: 'center top',
                 }}
-                onError={e => { e.currentTarget.style.display = 'none' }}
               />
-              {/* Placeholder shown when no image */}
-              <div style={{
-                position: 'absolute', inset: 0,
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                opacity: 0.45,
-              }}>
-                <svg width="72" height="72" viewBox="0 0 80 80" fill="rgba(255,255,255,0.6)">
-                  <circle cx="40" cy="27" r="13" />
-                  <path d="M14 72c0-14.4 11.6-26 26-26s26 11.6 26 26" />
-                </svg>
-                <p style={{ marginTop: 14, fontSize: 15, fontWeight: 500, color: 'rgba(255,255,255,0.7)' }}>Wendy Mader</p>
-                <p style={{ fontSize: 12, color: 'rgba(255,255,255,0.4)', marginTop: 4 }}>Photo coming soon</p>
-              </div>
 
               {/* Overlay gradient — bottom */}
               <div style={{

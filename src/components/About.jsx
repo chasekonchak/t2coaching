@@ -107,24 +107,22 @@ export default function About() {
           <div ref={imageRef} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
             <div style={{
               position: 'relative', borderRadius: 20, overflow: 'hidden', aspectRatio: '4 / 5',
-              background: 'linear-gradient(135deg, #0D2B3E 0%, #1A6B8A 45%, #4AABCC 80%, #7EC8E3 100%)',
+              background: '#0D2B3E',
             }}>
+              <img
+                src="/wendy-bike.jpg"
+                alt="Wendy Mader cycling"
+                style={{
+                  position: 'absolute', inset: 0,
+                  width: '100%', height: '100%',
+                  objectFit: 'cover', objectPosition: 'center top',
+                }}
+              />
+              {/* Overlay gradient — bottom */}
               <div style={{
-                position: 'absolute', inset: 0, opacity: 0.08,
-                backgroundImage: 'repeating-linear-gradient(45deg, transparent, transparent 20px, rgba(255,255,255,0.5) 20px, rgba(255,255,255,0.5) 21px)',
+                position: 'absolute', bottom: 0, left: 0, right: 0, height: '35%',
+                background: 'linear-gradient(to top, rgba(13,43,62,0.7), transparent)',
               }} />
-              <div style={{
-                position: 'absolute', inset: 0,
-                display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center',
-                color: 'rgba(255,255,255,0.5)',
-              }}>
-                <svg width="56" height="56" viewBox="0 0 80 80" fill="currentColor">
-                  <circle cx="40" cy="28" r="12" />
-                  <path d="M16 70c0-13.3 10.7-24 24-24s24 10.7 24 24" />
-                </svg>
-                <p style={{ marginTop: 12, fontSize: 14, fontWeight: 500 }}>Wendy Mader</p>
-                <p style={{ fontSize: 12, opacity: 0.6, marginTop: 4 }}>Photo coming soon</p>
-              </div>
               <div style={{ position: 'absolute', top: 16, right: 16, width: 36, height: 36, borderTop: '2px solid rgba(245,166,35,0.55)', borderRight: '2px solid rgba(245,166,35,0.55)' }} />
               <div style={{ position: 'absolute', bottom: 16, left: 16, width: 36, height: 36, borderBottom: '2px solid rgba(245,166,35,0.55)', borderLeft: '2px solid rgba(245,166,35,0.55)' }} />
             </div>
