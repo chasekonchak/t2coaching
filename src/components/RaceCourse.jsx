@@ -346,27 +346,18 @@ export default function RaceCourse() {
           />
         </svg>
 
-        {/* M-Dot triathlete figure traveling the course */}
+        {/* M-Dot logo traveling the course */}
         <div ref={dotRef} style={{
-          position: 'absolute', width: 28, height: 36,
+          position: 'absolute', width: 26, height: 28,
           transform: 'translate(-50%, -50%)',
           display: 'none', color: '#90e0ef',
-          filter: 'drop-shadow(0 0 7px currentColor)',
+          filter: 'drop-shadow(0 0 8px currentColor)',
         }}>
-          <svg viewBox="0 0 28 36" style={{ width: '100%', height: '100%' }}
-            fill="currentColor" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round">
-            {/* Head */}
-            <circle cx="14" cy="4" r="3.5" stroke="none"/>
-            {/* Torso */}
-            <line x1="14" y1="7.5" x2="12.5" y2="18" strokeWidth="2.8" fill="none"/>
-            {/* Left arm (forward) */}
-            <line x1="13" y1="12" x2="6" y2="15" strokeWidth="2.2" fill="none"/>
-            {/* Right arm (back) */}
-            <line x1="13" y1="12" x2="20" y2="14" strokeWidth="2.2" fill="none"/>
-            {/* Left leg forward */}
-            <path d="M12.5 18 L8 26 L6 33" strokeWidth="2.5" fill="none"/>
-            {/* Right leg back */}
-            <path d="M12.5 18 L17 25 L19 31" strokeWidth="2.5" fill="none"/>
+          <svg viewBox="0 0 100 108" style={{ width: '100%', height: '100%' }} fill="currentColor">
+            {/* Head circle */}
+            <circle cx="50" cy="20" r="19"/>
+            {/* M body: wide shoulders, two legs, V-notch from bottom */}
+            <path d="M10,42 L90,42 L90,105 L50,72 L10,105 Z"/>
           </svg>
         </div>
       </div>
